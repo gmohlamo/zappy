@@ -18,26 +18,45 @@ enum e_rock_type = {linemate, deraumere, sibur, mendiane, phiras, thystame};
 
 typedef struct			s_stone
 {
-	enum e_rock_type	rock; //literally made this so I can have them in an array without worrying about how to tell the stones apart.
+	enum e_rock_type	rock;
+	struct s_stone		*next;
+	struct s_stone		*prev;
 }				t_stone;
 
 typedef struct			s_food
 {
 	unsigned int		value;
+	struct s_food		*next;
+	struct s_food		*prev;
 }				t_food;
 
 typedef struct			s_block
 {
-	t_player		players[MAX_PLAYERS];
-	t_stone			stones[MAX_STONES];
-	t_food			food[MAX_FOOD];
+	t_player		*players;
+	t_stone			*stones;
+	t_food			*food;
 }				t_block;
 
-typedef struct		;
-
-typedef struct		s_board
+typedef struct			s_player
 {
-	t_block		board[HEIGHT[WIDTH]];
-}			t_board;
+	int			fd;
+	int			x;
+	int			y;
+	t_stone			*stones;
+	t_food			*food;
+}				t_player;
+
+typedef struct			s_board
+{
+	t_block			board[HEIGHT[WIDTH]];
+	fd_set			rset;
+	fd_set			wset;
+	fd_set			orig_set;
+	socklen_t		addrlen;
+	struct sockaddr_storage	remoteaddr;
+	struct addrinfo		hints;
+	struct addrinfo		*res;
+	struct addrinfo		*res0;
+}				t_board;
 
 #endif
