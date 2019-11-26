@@ -5,58 +5,41 @@
 # include <netinet/in.h>
 # include <sys/socket.h>
 # include <sys/types.h>
+# include <sys/select.h>
 # include <arpa/inet.h>
 # include <netdb.h>
 
-# define HEIGHT 1024
-# define WIDTH 1024
+# define ROWS 1024
+# define COLUMNS 1024
 # define MAX_PLAYERS 12
 # define MAX_STONES 2
-# define MAX_FOOD 1 //wanna treat food as a value I can move back and forth but I don't need to worry about it having came from a unique address.
+# define MAX_FOOD 1
 
-enum e_rock_type = {linemate, deraumere, sibur, mendiane, phiras, thystame};
+enum e_rock_type {linemate, deraumere, sibur, mendiane, phiras, thystame};
+enum e_obj {rock, food};
 
-typedef struct			s_stone
+typedef struct		s_object
 {
-	enum e_rock_type	rock;
-	struct s_stone		*next;
-	struct s_stone		*prev;
-}				t_stone;
-
-typedef struct			s_food
+	int				x;
+	int				y;
+	enum e_obj		type;
+}					t_object;
+typedef struct		s_inv
 {
-	unsigned int		value;
-	struct s_food		*next;
-	struct s_food		*prev;
-}				t_food;
+	int				x;
+	int				y;
+	t_object		*item;
+	struct s_inv	*next;
+}					t_inv;
 
-typedef struct			s_block
+typedef struct		s_client
 {
-	t_player		*players;
-	t_stone			*stones;
-	t_food			*food;
-}				t_block;
-
-typedef struct			s_player
-{
-	int			fd;
-	int			x;
-	int			y;
-	t_stone			*stones;
-	t_food			*food;
-}				t_player;
-
-typedef struct			s_board
-{
-	t_block			board[HEIGHT[WIDTH]];
-	fd_set			rset;
-	fd_set			wset;
-	fd_set			orig_set;
-	socklen_t		addrlen;
-	struct sockaddr_storage	remoteaddr;
-	struct addrinfo		hints;
-	struct addrinfo		*res;
-	struct addrinfo		*res0;
-}				t_board;
+	int				fd;
+	int				x;
+	int				y;
+	size_t			level;
+	t_inv			*inventory;
+	struct s_client	*next;
+}					t_client;
 
 #endif
