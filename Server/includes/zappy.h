@@ -18,50 +18,59 @@
 enum e_rock_type {linemate, deraumere, sibur, mendiane, phiras, thystame};
 enum e_obj {rock, food};
 
-typedef struct		s_object //represent game objects
+typedef struct				s_object //represent game objects
 {
-	int				x;
-	int				y;
-	enum e_obj		type;
-	struct s_object	*next;
-}					t_object;
+	int						x;
+	int						y;
+	enum e_obj				type;
+	struct s_object			*next;
+}							t_object;
 
-typedef struct		s_objects //hold all objects in the game world.
+typedef struct				s_objects //hold all objects in the game world.
 {
-	size_t			count;
-	t_object		*objects;
-}					t_objects;
-typedef struct		s_inv //represent client inventory
+	size_t					count;
+	t_object				*objects;
+}							t_objects;
+typedef struct				s_inv //represent client inventory
 {
-	int				x;
-	int				y;
-	t_object		*item;
-	struct s_inv	*next;
-}					t_inv;
+	int						x;
+	int						y;
+	t_object				*item;
+	struct s_inv			*next;
+}							t_inv;
 
-typedef struct		s_client //represent each client
+typedef struct				s_client //represent each client
 {
-	int				fd;
-	int				x;
-	int				y;
-	int				team;
-	size_t			level;
-	size_t			life;
-	t_inv			*inventory;
-	struct s_client	*next;
-}					t_client;
+	int						fd;
+	int						x;
+	int						y;
+	int						team;
+	size_t					level;
+	size_t					life;
+	size_t					cost;
+	t_inv					*inventory;
+	struct s_client			*next;
+}							t_client;
 
-typedef struct		s_game //hold the entire game state
+typedef struct				s_game //hold the entire game state
 {
-	int				fd_sock;
-	int				conn;
-	struct timeval	timeout;
-	struct addrinfo hints;
-	struct addrinfo	*result;
-	struct addrinfo	*rp;
-	fd_set			set;
-	t_client		*clients;
-	t_objects		*objects;
-}					t_game;
+	int						fd_sock;
+	int						conn;
+	int						max_fd;
+	size_t					client_count;
+	struct timeval			timeout;
+	struct sockaddr_storage	remoteaddr;
+	struct addrinfo 		hints;
+	struct addrinfo			*result;
+	struct addrinfo			*rp;
+	fd_set					set;
+	fd_set					rset;
+	fd_set					wset;
+	t_client				*clients;
+	t_objects				*objects;
+}							t_game;
+
+t_game      *init_game(char *addr);
+void		run_game(t_game *game);
 
 #endif

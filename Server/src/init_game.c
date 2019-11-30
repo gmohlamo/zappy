@@ -21,9 +21,18 @@ void        checkaddr(t_game *game)
     if (game->rp == NULL)
     {
         ft_putendl_fd("Error: failed to bind to socket", 2);
+        freeaddrinfo(game->result);
+        free(game);
         exit(EXIT_FAILURE);
     }
     freeaddrinfo(game->result);
+}
+
+void        finalize_init(t_game *game)
+{
+    FD_CLEAR(game->wset);
+    game->rset = game->set;
+    game->timeout.tv_sec = 1;
 }
 
 void        conn_listen(t_game *game)
@@ -31,8 +40,12 @@ void        conn_listen(t_game *game)
     if (listen(game->fd_sock, 12) == -1)
     {
         ft_putendl_fd("Error: failed to listen on port", 2);
+        free(game);
         exit(EXIT_FAILURE);
     }
+    FD_SET(game->fd_sock, &(game->set));
+    game->max_fd = game->fd_sock; //set to listen for connections and the highest fd has been recorded
+    finalize_init(game);
 }
 
 t_game      *init_game(char *addr)
