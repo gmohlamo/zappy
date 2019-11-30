@@ -37,6 +37,10 @@ void        finalize_init(t_game *game)
 
 void        conn_listen(t_game *game)
 {
+    int     yes;
+
+    yes = 1;
+    setsockopt(game->fd_sock, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));
     if (listen(game->fd_sock, 12) == -1)
     {
         ft_putendl_fd("Error: failed to listen on port", 2);
@@ -48,14 +52,16 @@ void        conn_listen(t_game *game)
     finalize_init(game);
 }
 
-t_game      *init_game(char *addr)
+t_game      *init_game(char **av, int ac)
 {
     t_game  *game;
+    char    *addr;
 
     game = ft_malloc(sizeof(t_game));
     if (game)
     {
-        game->timeout.tv_sec = 1;
+        addr = parse_args(game, av, ac);
+        game->gfx_bool = false;
         ft_memset(&(game->hints), 0, sizeof(struct addrinfo));
         game->hints.ai_family = AF_UNSPEC;
         game->hints.ai_socktype = SOCK_STREAM;

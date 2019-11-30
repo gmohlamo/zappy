@@ -4,6 +4,7 @@ int     main(int ac, char **av)
 {
 	t_game *game;
 
+	srand(time(0)); //used to made pseudo random placement of objects when we initiate the game
 	if (ac == 2)
 	{
 		game = init_game(av[1]);
