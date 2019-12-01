@@ -68,6 +68,7 @@ typedef struct				s_game //hold the entire game state
 	int						x;
 	int						y;
 	int						gfx; //the gfx socket
+	struct sockaddr			gfx_addr; //addr info for the gfx
 	bool					gfx_bool; //check if the gfx has been connected already... first connection
 	int						time_div;
 	size_t					allowed_clients;
