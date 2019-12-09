@@ -75,7 +75,7 @@ typedef struct				s_game //hold the entire game state
 	size_t					client_count;
 	char					**teams;
 	useconds_t				timeout;
-	struct sockaddr_storage	remoteaddr;
+	struct sockaddr_storage	remoteaddr;//server address information
 	struct addrinfo 		hints;
 	struct addrinfo			*result;
 	struct addrinfo			*rp;
@@ -86,7 +86,7 @@ typedef struct				s_game //hold the entire game state
 	t_objects				*objects;
 }							t_game;
 
-t_game      *init_game(char *addr);
+t_game      *init_game(char *addr, int ac);
 void		run_game(t_game *game);
 void		init_client(t_client *client, t_game *game);
 char		*parse_args(t_game *game, char **av, int ac);

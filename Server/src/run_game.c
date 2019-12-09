@@ -18,7 +18,9 @@ void				new_client(t_game *game)
 		free(n_client);
 	}
 	else
+	{
 		append_client(game, n_client);
+	}
 }
 
 void				connect_gfx(t_game *game)

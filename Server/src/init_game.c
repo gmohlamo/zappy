@@ -32,7 +32,6 @@ void        finalize_init(t_game *game)
 {
     FD_CLEAR(game->wset);
     game->rset = game->set;
-    game->timeout.tv_sec = 1;
 }
 
 void        conn_listen(t_game *game)
@@ -41,7 +40,7 @@ void        conn_listen(t_game *game)
 
     yes = 1;
     setsockopt(game->fd_sock, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));
-    if (listen(game->fd_sock, 12) == -1)
+    if (listen(game->fd_sock, 1024) == -1)
     {
         ft_putendl_fd("Error: failed to listen on port", 2);
         free(game);
