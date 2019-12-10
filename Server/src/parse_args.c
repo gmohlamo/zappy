@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_args.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/10 10:47:36 by gmohlamo          #+#    #+#             */
+/*   Updated: 2019/12/10 12:31:04 by gmohlamo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <zappy.h>
 
 char		*get_port(char *port)
@@ -80,4 +92,5 @@ char		*parse_args(t_game *game, char **av, int ac)
 	}
 	get_teams(game, av, ac);
 	parse_game_config(game, addr);
+	return (addr);
 }

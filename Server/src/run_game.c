@@ -12,7 +12,7 @@ void				new_client(t_game *game)
 	}
 	//accept connections from new clients
 	if ((game->conn = accept(game->fd_sock, //need to read this man page
-		&(n_client->addr), sizeof(struct sockaddr))) == -1)
+		&(n_client->addr), &game->socklen)) == -1)
 	{
 		ft_putendl_fd(ERR_ACCEPT, 2);
 		free(n_client);
@@ -28,7 +28,7 @@ void				connect_gfx(t_game *game)
 	if (game->gfx_bool == false)
 	{
 		game->gfx = accept(game->fd_sock,
-			&(game->gfx_addr), sizeof(struct sockaddr));
+			&(game->gfx_addr), &game->socklen);
 		if (game->gfx == -1)
 		{
 			ft_putendl_fd("Error: Error connecting to GFX client", 2);
@@ -38,7 +38,7 @@ void				connect_gfx(t_game *game)
 			game->max_fd = game->gfx;
 		game->gfx_bool = true;
 		FD_SET(game->gfx, &(game->wset));
-		ft_Putendl("Successfully connected the gfx");
+		ft_putendl("Successfully connected the gfx");
 	}
 	else
 	{

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   zappy.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
+/*   Updated: 2019/12/10 12:22:44 by gmohlamo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_ZAPPY
 #define FT_ZAPPY
 
@@ -11,7 +23,10 @@
 # include <sys/select.h>
 # include <arpa/inet.h>
 # include <netdb.h>
+# include <stdio.h>
 
+# define RING_BUFF_SIZE 512
+# define RING_SIZE 6
 # define LIFE 126
 # define ROWS 1024
 # define COLUMNS 1024
@@ -55,6 +70,7 @@ typedef struct				s_client //represent each client
 	size_t					life;
 	size_t					cost;
 	size_t					orientation;
+	t_list					*lines;
 	t_inv					*inventory;
 	struct sockaddr			addr;
 	struct s_client			*next;
@@ -79,6 +95,7 @@ typedef struct				s_game //hold the entire game state
 	struct addrinfo 		hints;
 	struct addrinfo			*result;
 	struct addrinfo			*rp;
+	socklen_t				socklen;
 	fd_set					set;
 	fd_set					rset;
 	fd_set					wset;
@@ -86,10 +103,11 @@ typedef struct				s_game //hold the entire game state
 	t_objects				*objects;
 }							t_game;
 
-t_game      *init_game(char *addr, int ac);
+t_game      *init_game(char **av, int ac);
 void		run_game(t_game *game);
 void		init_client(t_client *client, t_game *game);
 char		*parse_args(t_game *game, char **av, int ac);
 void		usage_exit(void);
+void		append_client(t_game *game, t_client *client);
 
 #endif
