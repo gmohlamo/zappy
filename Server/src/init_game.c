@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:31 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/10 13:10:16 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/10 13:48:50 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,15 @@ void        conn_listen(t_game *game)
 	yes = 1;
 	setsockopt(game->fd_sock, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));
 	printf("About to listen to --> %d\n", game->fd_sock);
-	if (listen(game->fd_sock, 1024) == -1)
+	if (listen(game->fd_sock, 10) == -1)
 	{
 		ft_putendl_fd("Error: failed to listen on port", 2);
 		free(game);
 		exit(EXIT_FAILURE);
 	}
 	FD_SET(game->fd_sock, &(game->set));
-	game->max_fd = game->fd_sock; //set to listen for connections and the highest fd has been recorded
+	game->max_fd = game->fd_sock + 1; //set to listen for connections and the highest fd has been recorded
+	printf("%d --> max_fd\n", game->max_fd);
 	finalize_init(game);
 }
 
@@ -98,7 +99,6 @@ t_game      *init_game(char **av, int ac)
 		checkaddr(game);
 		ft_putendl("About to connect");
 		conn_listen(game);
-		exit(1);
 	}
 	return  (game);
 }
