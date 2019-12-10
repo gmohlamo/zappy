@@ -37,7 +37,6 @@ void				connect_gfx(t_game *game)
 		}
 		if (game->gfx > game->max_fd)
 			game->max_fd = game->gfx + 1;
-		game->gfx_bool = true;
 		FD_SET(game->gfx, &(game->wset));
 		FD_CLR(game->fd_sock, &(game->set));
 		ft_putendl("Successfully connected the gfx");
@@ -47,7 +46,8 @@ void				connect_gfx(t_game *game)
 		ft_putendl_fd("Error: Internal server error", 2);
 		exit(EXIT_FAILURE);
 	}
-	exit(1);
+	FD_CLR(game->fd_sock, &(game->set)); //don't accept any more connections
+	//unless the gfx socket has been confirmed.
 }//should have the graphical client connected here
 
 void				process_clients(t_game *game)
@@ -63,8 +63,10 @@ void				process_clients(t_game *game)
 			ft_putendl("Found a file descriptor to go through");
 			if (itr == game->fd_sock && game->gfx_bool)
 				new_client(game);
-			else if (itr == game->fd_sock)
+			else if (itr == game->fd_sock && !game->gfx)
 				connect_gfx(game);
+			else
+				process_line(game, itr);
 		}
 		itr++;
 	}

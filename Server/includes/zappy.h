@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/10 12:22:44 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:53:30 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct				s_object //represent game objects
 	int						x;
 	int						y;
 	enum e_obj				type;
-	struct s_object			*next;
 }							t_object;
 
 typedef struct				s_objects //hold all objects in the game world.
@@ -84,6 +83,8 @@ typedef struct				s_game //hold the entire game state
 	int						x;
 	int						y;
 	int						gfx; //the gfx socket
+	char					*gfx_line;//cause gfx also needs to send lines
+	char					*gfx_line_rem;
 	struct sockaddr			gfx_addr; //addr info for the gfx
 	bool					gfx_bool; //check if the gfx has been connected already... first connection
 	int						time_div;
@@ -109,5 +110,6 @@ void		init_client(t_client *client, t_game *game);
 char		*parse_args(t_game *game, char **av, int ac);
 void		usage_exit(void);
 void		append_client(t_game *game, t_client *client);
+void		process_line(t_game *game, int fd);
 
 #endif
