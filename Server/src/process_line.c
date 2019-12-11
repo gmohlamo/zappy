@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:25:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/10 16:43:37 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/11 10:35:03 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void		close_gfx(t_game *game, char *msg)
 {
 	ft_putendl(msg);
 	close(game->gfx);
+	close_clients(game);
 }
 
 void		process_line(t_game *game, int fd)

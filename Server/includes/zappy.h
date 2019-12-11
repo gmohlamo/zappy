@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/10 16:53:30 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/11 10:35:23 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,13 @@
 # define CLIENT_ALLOC_ERR "Error: Unable to allocate memory for client"
 # define ERR_ACCEPT "Error: Unable to accept socket connection"
 
-enum e_rock_type {linemate, deraumere, sibur, mendiane, phiras, thystame};
-enum e_obj {rock, food};
+enum e_resource_type {linemate, deraumere, sibur, mendiane, phiras, thystame};
 
 typedef struct				s_object //represent game objects
 {
 	int						x;
 	int						y;
-	enum e_obj				type;
+	enum e_resource_type	type;
 }							t_object;
 
 typedef struct				s_objects //hold all objects in the game world.
@@ -111,5 +110,6 @@ char		*parse_args(t_game *game, char **av, int ac);
 void		usage_exit(void);
 void		append_client(t_game *game, t_client *client);
 void		process_line(t_game *game, int fd);
+void		close_clients(t_game *game);
 
 #endif
