@@ -58,7 +58,6 @@ void				process_clients(t_game *game)
 	int				itr;
 	
 	itr = 0;
-	ft_putendl("Processing client");
 	while (itr <= game->max_fd)
 	{
 		if (FD_ISSET(itr, &(game->rset)))
@@ -82,17 +81,15 @@ void				run_game(t_game *game)
 	ft_putendl("About to run game");
 	while (1)
 	{
-		printf("max_fd --> %d\n", game->max_fd);
 		game->rset = game->set;
 		if (select(game->max_fd, &(game->rset),
-			NULL, NULL, NULL) == -1)
+			NULL, NULL, &elapse) == -1)
 		{
 			ft_putendl_fd("Error: select error", 2);
 			close(game->fd_sock);
 			free(game);
 			exit(EXIT_FAILURE);
 		}
-		ft_putendl("This should not show");
 		process_clients(game);
 	}
 }
