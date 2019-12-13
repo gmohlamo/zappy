@@ -1,25 +1,28 @@
 #include <zappy.h>
 
-void				new_client(t_game *game)
+void				new_connection(t_game *game)
 {
-	t_client		*n_client;
+	t_connection	*n_conn;
 
-	n_client = ft_memalloc(sizeof(t_client));
-	if (!n_client)
+	ft_putendl("Creating a new connection");
+	n_conn = ft_memalloc(sizeof(t_client));
+	if (!n_conn)
 	{
 		ft_putendl_fd(CLIENT_ALLOC_ERR, 2);
 		exit(EXIT_FAILURE);
 	}
 	//accept connections from new clients
 	if ((game->conn = accept(game->fd_sock, //need to read this man page
-		&(n_client->addr), &game->socklen)) == -1)
+		&(n_conn->addr), &game->socklen)) == -1)
 	{
 		ft_putendl_fd(ERR_ACCEPT, 2);
-		free(n_client);
+		free(n_conn);
 	}
 	else
 	{
-		append_client(game, n_client);
+		ft_putendl("adding new connection to list");
+		n_conn->fd = game->conn;
+		append_connection(game, n_conn);
 	}
 }
 
@@ -52,7 +55,7 @@ void				connect_gfx(t_game *game)
 
 void				process_clients(t_game *game)
 {
-	size_t			itr;
+	int				itr;
 	
 	itr = 0;
 	ft_putendl("Processing client");
@@ -60,11 +63,9 @@ void				process_clients(t_game *game)
 	{
 		if (FD_ISSET(itr, &(game->rset)))
 		{
-			ft_putendl("Found a file descriptor to go through");
-			if (itr == game->fd_sock && game->gfx_bool)
-				new_client(game);
-			else if (itr == game->fd_sock && !game->gfx)
-				connect_gfx(game);
+			printf("Active file descriptor: %d\nMax --> %d\n", itr, game->max_fd);
+			if (itr == game->fd_sock)
+				new_connection(game);
 			else
 				process_line(game, itr);
 		}
@@ -81,6 +82,8 @@ void				run_game(t_game *game)
 	ft_putendl("About to run game");
 	while (1)
 	{
+		printf("max_fd --> %d\n", game->max_fd);
+		game->rset = game->set;
 		if (select(game->max_fd, &(game->rset),
 			NULL, NULL, NULL) == -1)
 		{

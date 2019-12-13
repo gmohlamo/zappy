@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:29 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/10 10:47:40 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/13 15:29:26 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void		init_client(t_client *client, t_game *game)
 {
+	(void)game;
 	client->x = rand() % 16;
 	client->y = rand() % 16; //assign "random" coordinates on the games map
 	client->orientation = rand() % 4; //direction client is facing

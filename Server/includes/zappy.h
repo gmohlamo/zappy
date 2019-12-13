@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/11 10:35:23 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/13 16:15:48 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define ERR_ACCEPT "Error: Unable to accept socket connection"
 
 enum e_resource_type {linemate, deraumere, sibur, mendiane, phiras, thystame};
+enum e_client_type {client, gfx};
 
 typedef struct				s_object //represent game objects
 {
@@ -64,6 +65,7 @@ typedef struct				s_client //represent each client
 	int						x;
 	int						y;
 	int						team;
+	enum e_client_type		type;
 	size_t					level;
 	size_t					life;
 	size_t					cost;
@@ -73,6 +75,14 @@ typedef struct				s_client //represent each client
 	struct sockaddr			addr;
 	struct s_client			*next;
 }							t_client;
+
+typedef struct				s_connection
+{
+	int						fd;
+	struct sockaddr			addr;
+	struct s_connection		*next;
+}							t_connection; //because I need to keep track of all connections made to
+//the server and put them in the game while relavent
 
 typedef struct				s_game //hold the entire game state
 {
@@ -84,6 +94,7 @@ typedef struct				s_game //hold the entire game state
 	int						gfx; //the gfx socket
 	char					*gfx_line;//cause gfx also needs to send lines
 	char					*gfx_line_rem;
+	char					*addr;
 	struct sockaddr			gfx_addr; //addr info for the gfx
 	bool					gfx_bool; //check if the gfx has been connected already... first connection
 	int						time_div;
@@ -99,6 +110,7 @@ typedef struct				s_game //hold the entire game state
 	fd_set					set;
 	fd_set					rset;
 	fd_set					wset;
+	t_connection			*connections;
 	t_client				*clients;
 	t_objects				*objects;
 }							t_game;
@@ -109,6 +121,7 @@ void		init_client(t_client *client, t_game *game);
 char		*parse_args(t_game *game, char **av, int ac);
 void		usage_exit(void);
 void		append_client(t_game *game, t_client *client);
+void		append_connection(t_game *game, t_connection *conn);
 void		process_line(t_game *game, int fd);
 void		close_clients(t_game *game);
 

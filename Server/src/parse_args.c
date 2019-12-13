@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:36 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/10 16:24:58 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/13 15:35:45 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int			get_dim(char *dim)
 
 void		get_teams(t_game *game, char **av, int ac)
 {
-	size_t	itr;
+	int		itr;
 
 	itr = 0;
 	while (itr < ac)
@@ -71,15 +71,13 @@ void		parse_game_config(t_game *game, char *addr)
 
 char		*parse_args(t_game *game, char **av, int ac)
 {
-	char	*addr;
-	size_t	itr;
+	int		itr;
 
 	itr = 0;
-	addr = NULL;
 	while (itr < ac)
 	{
 		if (ft_strequ(av[itr], "-p") && itr < ac -1)
-			addr = get_port(av[itr + 1]);
+			game->addr = get_port(av[itr + 1]);
 		else if (ft_strequ(av[itr], "-x") && itr < ac -1)
 			game->x = get_dim(av[itr + 1]);
 		else if (ft_strequ(av[itr], "-y") && itr < ac -1)
@@ -91,6 +89,6 @@ char		*parse_args(t_game *game, char **av, int ac)
 		itr++;
 	}
 	get_teams(game, av, ac);
-	parse_game_config(game, addr);
-	return (addr);
+	parse_game_config(game, game->addr);
+	return (game->addr);
 }
