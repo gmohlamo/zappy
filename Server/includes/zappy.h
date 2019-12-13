@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/13 16:15:48 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/13 16:52:52 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,6 @@ void		append_client(t_game *game, t_client *client);
 void		append_connection(t_game *game, t_connection *conn);
 void		process_line(t_game *game, int fd);
 void		close_clients(t_game *game);
+void		close_connection(t_game *game, int fd);
 
 #endif

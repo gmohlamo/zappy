@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:25:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/13 16:34:54 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/13 17:16:16 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void		process_line(t_game *game, int fd)
 	int		bytes_read;
 	bytes_read = recv(fd, buffer, 1024, MSG_DONTWAIT);
 	if (!bytes_read)
-		close_gfx(game, "GFX closed connection\nClosing game");
+	{
+		close_connection(game, fd);
+		return ;
+	}
 	temp = ft_strsafejoin(game->gfx_line, buffer);
 	if (game->gfx_line)
 		free(game->gfx_line);

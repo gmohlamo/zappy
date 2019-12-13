@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 16:10:08 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/13 16:32:46 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/13 17:17:18 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void				append_connection(t_game *game, t_connection *conn)
 
 	ptr = game->connections;
 	printf("%d new file descriptor\n", conn->fd);
-	if (conn->fd > game->max_fd)
+	if (conn->fd >= game->max_fd)
 		game->max_fd = conn->fd + 1;
 	FD_SET(conn->fd, &(game->set));
 	if (ptr)
