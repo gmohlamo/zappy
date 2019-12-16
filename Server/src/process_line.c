@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:25:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/13 17:16:16 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/16 15:06:42 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,21 @@ void		close_gfx(t_game *game, char *msg)
 	close_clients(game);
 }
 
-void		process_line(t_game *game, int fd)
+void				match_line(t_game *game, int fd)
 {
-	char	buffer[1025];
-	char	*temp;
+	t_connection	*conn;
+	t_client		*client;
+
+	if (client = find_client(game, fd))
+		append_line(game, client);
+	else if (conn = find_conn(game, fd))
+		process_or_close(game, conn);
+}
+
+void				process_line(t_game *game, int fd)
+{
+	char			buffer[1025];
+	char			*temp;
 
 	printf("About to process line\n");
 	ft_bzero(buffer, 1025);
@@ -37,5 +48,5 @@ void		process_line(t_game *game, int fd)
 	if (game->gfx_line)
 		free(game->gfx_line);
 	game->gfx_line = temp;
-	ft_putendl(temp);
+	match_line(game, fd);
 }

@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_client.c                                      :+:      :+:    :+:   */
+/*   cheack_team.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/10 10:47:29 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/16 22:02:39 by gmohlamo         ###   ########.fr       */
+/*   Created: 2019/12/16 16:35:07 by gmohlamo          #+#    #+#             */
+/*   Updated: 2019/12/16 20:49:01 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <zappy.h>
 
-//initialize clients
-void		init_client(t_client *client, t_game *game)
+t_team			*check_team(t_game *game, char *team_name)
 {
-
-	(void)game;
-	client->x = rand() % game->x;
-	client->y = rand() % game->y;
-	client->orientation = rand() % 4; //direction client is facing
-	client->life = LIFE * 10; //we'll just divide this by LIFE and know how many life units the client has remaining
+	t_team		*teams;
+	
+	teams = game->teams;
+	while (teams)
+	{
+		if (teams->name == team_name && teams->current_count < teams->team_size)
+			return (teams);
+		else if (teams->name == team_name)
+			return (NULL);
+	}
+	return (NULL);
 }

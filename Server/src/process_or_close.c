@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_client.c                                      :+:      :+:    :+:   */
+/*   process_or_close.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/10 10:47:29 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/16 22:02:39 by gmohlamo         ###   ########.fr       */
+/*   Created: 2019/12/15 19:43:50 by gmohlamo          #+#    #+#             */
+/*   Updated: 2019/12/16 10:19:19 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <zappy.h>
 
-//initialize clients
-void		init_client(t_client *client, t_game *game)
+void			process_or_close(t_game *game, t_connection *conn)
 {
+	char		*temp;
 
-	(void)game;
-	client->x = rand() % game->x;
-	client->y = rand() % game->y;
-	client->orientation = rand() % 4; //direction client is facing
-	client->life = LIFE * 10; //we'll just divide this by LIFE and know how many life units the client has remaining
+	temp = NULL;
+	if (conn->line)
+	{
+		temp = ft_strsafejoin(conn->line, game->gfx_line);
+		free(conn->line);
+	}
+	else
+		conn->line = game->gfx_line;
+	game->gfx_line = NULL;
+	if (ft_strchr(conn->line, '\n'))//at this point we are ready to process this
+	//line or close this connection
+		assign_conn(game, conn);
 }

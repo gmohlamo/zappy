@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/13 16:52:52 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/16 21:42:24 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@
 # define MAX_FOOD 1
 # define CLIENT_ALLOC_ERR "Error: Unable to allocate memory for client"
 # define ERR_ACCEPT "Error: Unable to accept socket connection"
+# define GFX "GRAPHICS"
 
 enum e_resource_type {linemate, deraumere, sibur, mendiane, phiras, thystame};
-enum e_client_type {client, gfx};
 
 typedef struct				s_object //represent game objects
 {
@@ -65,7 +65,6 @@ typedef struct				s_client //represent each client
 	int						x;
 	int						y;
 	int						team;
-	enum e_client_type		type;
 	size_t					level;
 	size_t					life;
 	size_t					cost;
@@ -76,10 +75,19 @@ typedef struct				s_client //represent each client
 	struct s_client			*next;
 }							t_client;
 
+//last thing we need for each client is for them to belong to a team
+typedef struct				s_team
+{
+	char					*name;
+	size_t					current_count;
+	size_t					team_size;
+}							t_team;
+
 typedef struct				s_connection
 {
 	int						fd;
 	struct sockaddr			addr;
+	char					*line;
 	struct s_connection		*next;
 }							t_connection; //because I need to keep track of all connections made to
 //the server and put them in the game while relavent
@@ -100,7 +108,8 @@ typedef struct				s_game //hold the entire game state
 	int						time_div;
 	size_t					allowed_clients;
 	size_t					client_count;
-	char					**teams;
+	size_t					team_count;
+	char					**team_names;
 	useconds_t				timeout;
 	struct sockaddr_storage	remoteaddr;//server address information
 	struct addrinfo 		hints;
@@ -112,18 +121,24 @@ typedef struct				s_game //hold the entire game state
 	fd_set					wset;
 	t_connection			*connections;
 	t_client				*clients;
+	t_team					*teams;
 	t_objects				*objects;
 }							t_game;
 
-t_game      *init_game(char **av, int ac);
-void		run_game(t_game *game);
-void		init_client(t_client *client, t_game *game);
-char		*parse_args(t_game *game, char **av, int ac);
-void		usage_exit(void);
-void		append_client(t_game *game, t_client *client);
-void		append_connection(t_game *game, t_connection *conn);
-void		process_line(t_game *game, int fd);
-void		close_clients(t_game *game);
-void		close_connection(t_game *game, int fd);
+t_game      				*init_game(char **av, int ac);
+t_team						*init_teams(t_game *game);
+t_team						*check_team(t_game *game, char *team_name);
+void						run_game(t_game *game);
+void						init_client(t_client *client, t_game *game);
+char						*parse_args(t_game *game, char **av, int ac);
+void						usage_exit(void);
+void						append_client(t_game *game, t_connection *client,
+	char *team_name);
+void						append_connection(t_game *game, t_connection *conn);
+void						process_line(t_game *game, int fd);
+void						close_clients(t_game *game);
+void						close_connection(t_game *game, int fd);
+void						process_or_close(t_game *game, t_connection *conn);
+void						remove_conn(t_game *game, t_connection *conn);
 
 #endif

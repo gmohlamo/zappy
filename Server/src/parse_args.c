@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:36 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/13 15:35:45 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/16 17:05:15 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void		get_teams(t_game *game, char **av, int ac)
 	{
 		if (ft_strequ(av[itr], "-n") && itr < ac - 1)
 		{
-			game->teams = &av[itr + 1];
+			game->team_names = &av[itr + 1];
+			init_teams(game);
 			return ;
 		}
 		itr++;

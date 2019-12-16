@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 16:10:08 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/13 17:17:18 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/16 10:25:09 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,5 @@ void				append_connection(t_game *game, t_connection *conn)
 	}
 	else
 		game->connections = conn;
+	send(conn->fd, "WELCOME\n", 8, MSG_DONTWAIT);
 }
