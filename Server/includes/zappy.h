@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/16 21:42:24 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/17 18:13:11 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/socket.h>
 # include <sys/types.h>
 # include <sys/select.h>
+# include <sys/time.h>
 # include <arpa/inet.h>
 # include <netdb.h>
 # include <stdio.h>
@@ -33,12 +34,15 @@
 # define MAX_PLAYERS 12
 # define MAX_STONES 2
 # define MAX_FOOD 1
+# define CMD_BACKLOG 10
 # define CLIENT_ALLOC_ERR "Error: Unable to allocate memory for client"
 # define ERR_ACCEPT "Error: Unable to accept socket connection"
 # define GFX "GRAPHICS"
 
-enum e_resource_type {linemate, deraumere, sibur, mendiane, phiras, thystame};
-
+//enums for operations and resources
+enum e_operations {advance, right, left, see, inventory, take, put, kick,
+	broadcast, incantation, fork, connect_nbr, death};
+enum e_resource_type {food, linemate, deraumere, sibur, mendiane, phiras, thystame};
 typedef struct				s_object //represent game objects
 {
 	int						x;
@@ -55,7 +59,7 @@ typedef struct				s_inv //represent client inventory
 {
 	int						x;
 	int						y;
-	t_object				*item;
+	t_objects				*items;
 	struct s_inv			*next;
 }							t_inv;
 
@@ -64,14 +68,16 @@ typedef struct				s_client //represent each client
 	int						fd;
 	int						x;
 	int						y;
-	int						team;
 	size_t					level;
 	size_t					life;
 	size_t					cost;
 	size_t					orientation;
 	t_list					*lines;
 	t_inv					*inventory;
+	struct timeval			tv;
+	struct timezone			tz;
 	struct sockaddr			addr;
+	t_team					*team;
 	struct s_client			*next;
 }							t_client;
 
@@ -92,6 +98,14 @@ typedef struct				s_connection
 }							t_connection; //because I need to keep track of all connections made to
 //the server and put them in the game while relavent
 
+typedef struct				s_egg
+{
+	t_team					*team;
+	int						x;
+	int						y;
+	struct s_egg			*next;
+}							t_egg;
+
 typedef struct				s_game //hold the entire game state
 {
 	int						fd_sock;
@@ -111,6 +125,8 @@ typedef struct				s_game //hold the entire game state
 	size_t					team_count;
 	char					**team_names;
 	useconds_t				timeout;
+	struct timeval			tv;
+	struct timezone			tz;
 	struct sockaddr_storage	remoteaddr;//server address information
 	struct addrinfo 		hints;
 	struct addrinfo			*result;
@@ -123,15 +139,20 @@ typedef struct				s_game //hold the entire game state
 	t_client				*clients;
 	t_team					*teams;
 	t_objects				*objects;
+	void					(*operations[13])(); //array of functions to use when running operations from a client
 }							t_game;
 
 t_game      				*init_game(char **av, int ac);
 t_team						*init_teams(t_game *game);
 t_team						*check_team(t_game *game, char *team_name);
+t_client					*client(t_game *game, int fd);
+t_connection				*find_conn(t_game *game, int fd);
+void						assign_conn(t_game *game, t_connection *conn);
 void						run_game(t_game *game);
 void						init_client(t_client *client, t_game *game);
 char						*parse_args(t_game *game, char **av, int ac);
 void						usage_exit(void);
+void						append_line(t_game *game, t_client *client);
 void						append_client(t_game *game, t_connection *client,
 	char *team_name);
 void						append_connection(t_game *game, t_connection *conn);
@@ -139,6 +160,9 @@ void						process_line(t_game *game, int fd);
 void						close_clients(t_game *game);
 void						close_connection(t_game *game, int fd);
 void						process_or_close(t_game *game, t_connection *conn);
-void						remove_conn(t_game *game, t_connection *conn);
+void						remove_conn(t_game *game, t_connection *target);
+void						block_contents(t_game *game, int x, int y);
+void						send_init_gfx(t_game *game);
+char						*ft_strjoinint(char *str, int n);
 
 #endif

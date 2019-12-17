@@ -1,36 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   assign_conn.c                                      :+:      :+:    :+:   */
+/*   append_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/16 10:19:38 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/16 22:25:29 by gmohlamo         ###   ########.fr       */
+/*   Created: 2019/12/17 17:50:44 by gmohlamo          #+#    #+#             */
+/*   Updated: 2019/12/17 18:01:06 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <zappy.h>
 
-//assign a connection either to the gfx client or a team member client
-void		assign_conn(t_game *game, t_connection *conn)
+void			append_line(t_game *game, t_client *client)
 {
-	size_t	itr;
+	t_list		*lines;
+	size_t		count;
+	char		*str;
 
-	itr = 0;
-	if (!ft_strncmp(conn->line, GFX, ft_strlen(GFX)) && !game->gfx)
+	count = 0;
+	lines = client->lines;
+	str = NULL;
+	while (lines && count < CMD_BACKLOG)
 	{
-		add_gfx(game, conn);
-		return ;
-	}
-	while (itr < game->team_count)
-	{
-		if (ft_strstr(conn->line, game->teams[itr].name))
+		if (!ft_strchr((char*)(lines->content), "\n"))
 		{
-			append_client(game, conn, game->team_names[itr]);
+			str = ft_strjoin(lines->content, game->gfx_line);
+			free(lines->content);
+			lines->content = str;
 			return ;
 		}
-		itr++;
+		count++;
+		lines = lines->next;
 	}
-	close_connection(game, conn->fd);
 }

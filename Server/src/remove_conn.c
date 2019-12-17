@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 21:30:34 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/16 21:38:43 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/16 22:30:37 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void			clean_conn(t_connection *conn)
 }
 
 //remove a client from the linked list of clients
+//difference is that this one does not close the file descriptor
+//and clear it in the set
 void				remove_conn(t_game *game, t_connection *conn)
 {
 	t_connection	*ptr;
@@ -40,5 +42,6 @@ void				remove_conn(t_game *game, t_connection *conn)
 			ptr = ptr->next;
 		}
 	}
+	FD_CLR(conn->fd, &(game->set));
 	clean_conn(conn);
 }

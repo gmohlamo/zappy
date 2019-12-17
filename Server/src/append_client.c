@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:23 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/16 22:02:07 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/17 17:44:15 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static t_client	*new_client(t_game *game, t_connection *conn, char *team_name)
 	if (client)
 	{
 		init_client(client, game);
-		client->team = team_name;
+		client->team = team;
 		client->addr = conn->addr;
 		team->current_count++;
 		sprintf(buffer, "%d\n", team->team_size - team->current_count);

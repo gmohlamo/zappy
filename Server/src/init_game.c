@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:31 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/13 15:24:49 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/17 10:07:53 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,12 @@ t_game      *init_game(char **av, int ac)
 		checkaddr(game);
 		ft_putendl("About to connect");
 		conn_listen(game);
+		if (gettimeofday(&(game->tv), &(game->tz)))
+		{
+			ft_putendl_fd("Error: could not get time of day", 2);
+			free(game);
+			exit(EXIT_FAILURE);
+		}
 	}
 	return  (game);
 }

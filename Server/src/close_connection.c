@@ -6,13 +6,13 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 16:51:43 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/13 17:15:33 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/16 22:32:52 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <zappy.h>
 
-void				remove_conn(t_connection *target, t_game *game)
+static void			remove_connection(t_connection *target, t_game *game)
 {
 	t_connection	*cur_conn;
 
@@ -45,6 +45,7 @@ void				remove_client(t_client *target, t_game *game)
 		cur_client = cur_client->next;
 	}
 	FD_CLR(target->fd, &(game->set));
+	close(target->fd);
 	free(target);
 }
 
@@ -65,7 +66,7 @@ bool				find_target_connection(t_game *game, int fd)
 			return (true);
 		}
 		else
-			remove_conn(ptr, game);
+			remove_connection(ptr, game);
 		conn = conn->next;
 	}
 	return (false);
@@ -75,7 +76,7 @@ bool				find_target_connection(t_game *game, int fd)
 void				close_connection(t_game *game, int fd)
 {
 	t_client		*client;
-	void			*ptr;
+	t_client		*ptr;
 
 	client = game->clients;
 	if (find_target_connection(game, fd))
@@ -83,10 +84,11 @@ void				close_connection(t_game *game, int fd)
 	while (client)
 	{
 		ptr = client;
-		if (((t_client*)ptr)->fd == fd && ptr == game->clients)
+		if ((ptr)->fd == fd && ptr == game->clients)
 		{
-			game->clients = ((t_client*)ptr)->next;
-			FD_CLR(((t_client*)ptr)->fd, &(game->set));
+			game->clients = (ptr)->next;
+			FD_CLR((ptr)->fd, &(game->set));
+			close(ptr->fd);
 			free(ptr);
 		}
 		else
