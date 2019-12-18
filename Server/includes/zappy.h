@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/18 12:57:33 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/18 13:08:30 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ void						append_line(t_game *game, t_client *client);
 void						append_client(t_game *game, t_connection *client,
 	char *team_name);
 void						append_connection(t_game *game, t_connection *conn);
-void						client_advance_gfx(t_game *game, t_client *client);
 void						process_line(t_game *game, int fd);
 void						close_clients(t_game *game);
 void						close_connection(t_game *game, int fd);
@@ -169,5 +168,9 @@ char						*ft_strjoinint(char *str, int n);
 //client operations
 void						advance_op(t_game *game, t_client *client);
 void						connect_nbr_op(t_game *game, t_client *client);
+void						death_op(t_game *game, t_client *client);
+//client specific gfx
+void						client_advance_gfx(t_game *game, t_client *client);
+void						client_death_update(t_game *game, t_client *client);
 
 #endif
