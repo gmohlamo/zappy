@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gfx.h                                              :+:      :+:    :+:   */
+/*   nbr_client.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/17 16:14:18 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/18 11:12:23 by gmohlamo         ###   ########.fr       */
+/*   Created: 2019/12/18 11:10:51 by gmohlamo          #+#    #+#             */
+/*   Updated: 2019/12/18 11:15:03 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GFX_H
-# define GFX
+#include <zappy.h>
+#include <gfx.h>
 
-# include <zappy.h>
+void			nbr_client(t_game *game, t_client *client)
+{
+	char		*str;
+	size_t		itr;
+	t_client	*clients;
 
-void		send_eggs(t_game *game, int x, int y);
-void		nbr_client(t_game *game, t_client *client);
-
-# endif
+	itr = 0;
+	clients = game->clients;
+	while (clients)
+	{
+		if (clients == client)
+			break ;
+		itr++;
+		clients = clients->next;
+	}
+	str = ft_itoa(itr);
+	send(game->gfx, str, ft_strlen(str), MSG_DONTWAIT);
+	free(str);
+}

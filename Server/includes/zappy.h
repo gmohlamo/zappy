@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/17 18:13:11 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/18 12:57:33 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct				s_client //represent each client
 	struct timezone			tz;
 	struct sockaddr			addr;
 	t_team					*team;
+	enum e_operations		op;
 	struct s_client			*next;
 }							t_client;
 
@@ -156,6 +157,7 @@ void						append_line(t_game *game, t_client *client);
 void						append_client(t_game *game, t_connection *client,
 	char *team_name);
 void						append_connection(t_game *game, t_connection *conn);
+void						client_advance_gfx(t_game *game, t_client *client);
 void						process_line(t_game *game, int fd);
 void						close_clients(t_game *game);
 void						close_connection(t_game *game, int fd);
@@ -164,5 +166,8 @@ void						remove_conn(t_game *game, t_connection *target);
 void						block_contents(t_game *game, int x, int y);
 void						send_init_gfx(t_game *game);
 char						*ft_strjoinint(char *str, int n);
+//client operations
+void						advance_op(t_game *game, t_client *client);
+void						connect_nbr_op(t_game *game, t_client *client);
 
 #endif
