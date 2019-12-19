@@ -6,8 +6,13 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:17:29 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/17 18:17:34 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:31:20 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <zappy.h>
+
+void				kick_op(t_game *game, t_client *client)
+{
+	;
+}

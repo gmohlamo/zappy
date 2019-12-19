@@ -6,8 +6,13 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:16:39 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/17 18:16:48 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:29:47 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <zappy.h>
+
+void		incantation_op(t_game *game, t_client *client)
+{
+	;
+}

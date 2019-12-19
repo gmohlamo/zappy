@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/18 13:08:30 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:38:32 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,16 @@ char						*ft_strjoinint(char *str, int n);
 void						advance_op(t_game *game, t_client *client);
 void						connect_nbr_op(t_game *game, t_client *client);
 void						death_op(t_game *game, t_client *client);
+void						inventory_op(t_game *game, t_client *client);
+void						incantation_op(t_game *game, t_client *client);
+void						fork_op(t_game *game, t_client *client);
+void						kick_op(t_game *game, t_client *client);
+void						left_op(t_game *game, t_client *client);
+void						put_op(t_game *game, t_client *client);
+void						right_op(t_game *game, t_client *client);
+void						see_op(t_game *game, t_client *client);
+void						take_op(t_game *game, t_client *client);
+void						broadcast_op(t_game *game, t_client *client);
 //client specific gfx
 void						client_advance_gfx(t_game *game, t_client *client);
 void						client_death_update(t_game *game, t_client *client);

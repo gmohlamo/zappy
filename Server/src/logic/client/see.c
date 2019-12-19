@@ -6,8 +6,13 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:18:03 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/17 18:18:13 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:34:28 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <zappy.h>
+
+void			see_op(t_game *game, t_client *client)
+{
+	;
+}
