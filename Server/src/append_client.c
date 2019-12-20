@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:23 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/17 17:44:15 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/20 12:15:52 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,12 @@ static t_client	*new_client(t_game *game, t_connection *conn, char *team_name)
 		client->team = team;
 		client->addr = conn->addr;
 		team->current_count++;
-		sprintf(buffer, "%d\n", team->team_size - team->current_count);
+		sprintf(buffer, "%lu\n", team->team_size - team->current_count);
 		ft_bzero(buffer, 1024);
 		sprintf(buffer, "%d %d\n", client->x, client->y);
 		send(client->fd, buffer, ft_strlen(buffer), MSG_DONTWAIT);
 	}
-	else
-		return (client);
+	return (client);
 }
 
 //append a new client to the server

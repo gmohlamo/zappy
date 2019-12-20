@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 22:35:07 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/17 16:17:06 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/20 14:44:26 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		board_info(t_game *game)
 		{
 			//protocol for this will be that we send the block coordinates first
 			//then the contents, starting with clients and then resources
-			spinrtf("block %d %d\n", x, y); //the current block
+			sprintf(buffer, "block %d %d\n", x, y); //the current block
 			send(game->gfx, buffer, ft_strlen(buffer), MSG_DONTWAIT);
 			//send contents
 			block_contents(game, x, y); //send the contents of this block

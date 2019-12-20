@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:43:45 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/10 16:58:03 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/20 13:30:16 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void			clean_inventory(t_inv *inv)
 	{
 		item = inv;
 		inv = inv->next;
-		free(item->item);
+		free(item->items);
 		free(item);
 	}
 }

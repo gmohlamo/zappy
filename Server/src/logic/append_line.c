@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 17:50:44 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/17 18:01:06 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/20 14:19:52 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void			append_line(t_game *game, t_client *client)
 	str = NULL;
 	while (lines && count < CMD_BACKLOG)
 	{
-		if (!ft_strchr((char*)(lines->content), "\n"))
+		if (!ft_strchr((char*)(lines->content), '\n'))
 		{
 			str = ft_strjoin(lines->content, game->gfx_line);
 			free(lines->content);

@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 21:30:34 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/16 22:30:37 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/20 14:08:40 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void				remove_conn(t_game *game, t_connection *conn)
 	t_connection	*ptr;
 	t_connection	*temp;
 
-	if (conn = game->connections)
+	if ((conn = game->connections))
 		game->connections = conn->next;
 	else
 	{
@@ -42,6 +42,5 @@ void				remove_conn(t_game *game, t_connection *conn)
 			ptr = ptr->next;
 		}
 	}
-	FD_CLR(conn->fd, &(game->set));
 	clean_conn(conn);
 }

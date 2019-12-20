@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/19 11:38:32 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/20 14:52:27 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,23 @@
 
 //enums for operations and resources
 enum e_operations {advance, right, left, see, inventory, take, put, kick,
-	broadcast, incantation, fork, connect_nbr, death};
+	broadcast, incantation, spawn, connect_nbr, death};
 enum e_resource_type {food, linemate, deraumere, sibur, mendiane, phiras, thystame};
 typedef struct				s_object //represent game objects
 {
 	int						x;
 	int						y;
+	size_t					count;
 	enum e_resource_type	type;
 }							t_object;
+
+//last thing we need for each client is for them to belong to a team
+typedef struct				s_team
+{
+	char					*name;
+	size_t					current_count;
+	size_t					team_size;
+}							t_team;
 
 typedef struct				s_objects //hold all objects in the game world.
 {
@@ -81,14 +90,6 @@ typedef struct				s_client //represent each client
 	enum e_operations		op;
 	struct s_client			*next;
 }							t_client;
-
-//last thing we need for each client is for them to belong to a team
-typedef struct				s_team
-{
-	char					*name;
-	size_t					current_count;
-	size_t					team_size;
-}							t_team;
 
 typedef struct				s_connection
 {
@@ -148,6 +149,7 @@ t_team						*init_teams(t_game *game);
 t_team						*check_team(t_game *game, char *team_name);
 t_client					*client(t_game *game, int fd);
 t_connection				*find_conn(t_game *game, int fd);
+t_client					*find_client(t_game *game, int fd);
 void						assign_conn(t_game *game, t_connection *conn);
 void						run_game(t_game *game);
 void						init_client(t_client *client, t_game *game);
@@ -156,6 +158,7 @@ void						usage_exit(void);
 void						append_line(t_game *game, t_client *client);
 void						append_client(t_game *game, t_connection *client,
 	char *team_name);
+void						send_init_gfx(t_game *game);
 void						append_connection(t_game *game, t_connection *conn);
 void						process_line(t_game *game, int fd);
 void						close_clients(t_game *game);
@@ -164,6 +167,8 @@ void						process_or_close(t_game *game, t_connection *conn);
 void						remove_conn(t_game *game, t_connection *target);
 void						block_contents(t_game *game, int x, int y);
 void						send_init_gfx(t_game *game);
+void						add_gfx(t_game *game, t_connection *conn);
+void						update_gfx(t_game *game, t_client *client);
 char						*ft_strjoinint(char *str, int n);
 //client operations
 void						advance_op(t_game *game, t_client *client);

@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 16:48:26 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/16 22:03:59 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/20 13:31:36 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_team			*init_teams(t_game *game)
 	count = 0;
 	while (game->team_names[count])
 	{
-		if (!ft_isalnum(game->team_names[count]))
+		if (!ft_isalnum(game->team_names[count][0]))
 			break ;
 		count++;
 	}

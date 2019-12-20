@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gfx.h                                              :+:      :+:    :+:   */
+/*   find_client.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/17 16:14:18 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/20 14:52:12 by gmohlamo         ###   ########.fr       */
+/*   Created: 2019/12/20 13:32:51 by gmohlamo          #+#    #+#             */
+/*   Updated: 2019/12/20 13:35:42 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GFX_H
-# define GFX_H
+#include <zappy.h>
 
-# include <zappy.h>
+t_client			*find_client(t_game *game, int fd)
+{
+	t_client		*client;
 
-void		send_eggs(t_game *game, int x, int y);
-void		nbr_client(t_game *game, t_client *client);
-
-# endif
+	client = game->clients;
+	while (client)
+	{
+		if (client->fd == fd)
+			return (client);
+		client = client->next;
+	}
+	return (NULL);
+}
