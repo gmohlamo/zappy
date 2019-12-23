@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 12:45:52 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/17 16:16:53 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/23 11:39:36 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,16 @@ void			send_clients(t_game *game, t_client *clients, int x, int y)
 	}
 }
 
-void			block_contents(t_game *game, int x, int y)
+void			send_objects(t_game *game, int x, int y)
 {
-	t_client	*clients;
 	t_object	*objects;
-	size_t		count;
 	char		*str;
+	size_t		count;
 
 	str = NULL;
-	clients = game->clients;
-	objects = game->objects->objects;
+	objects = game->objects != NULL ? game->objects->objects: NULL;
+	if (objects == NULL)
+		return ;
 	count = game->objects->count;
 	while (count)
 	{
@@ -100,6 +100,15 @@ void			block_contents(t_game *game, int x, int y)
 		}
 		count--;
 	}
+}
+
+void			block_contents(t_game *game, int x, int y)
+{
+	t_client	*clients;
+
+	clients = game->clients;
+	send_objects(game, x, y);
+	ft_putendl("sending clients in the block");
 	send_clients(game, clients, x, y);
 	send_eggs(game, x, y);
 }

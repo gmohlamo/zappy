@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 22:35:07 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/20 14:44:26 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/23 10:58:54 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void		board_info(t_game *game)
 		ft_bzero(buffer, 1024);
 		while (x < game->x)
 		{
+			ft_putendl("running through the board");
 			//protocol for this will be that we send the block coordinates first
 			//then the contents, starting with clients and then resources
 			sprintf(buffer, "block %d %d\n", x, y); //the current block
@@ -41,6 +42,7 @@ void		board_info(t_game *game)
 
 void		send_init_gfx(t_game *game)
 {
+	ft_putendl("initializing graphics client");
 	char	buffer[1024];
 
 	//first send map size

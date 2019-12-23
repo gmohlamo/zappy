@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:25:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/20 14:08:06 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/23 10:30:29 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void				process_line(t_game *game, int fd)
 	ft_bzero(buffer, 1025);
 	int		bytes_read;
 	bytes_read = recv(fd, buffer, 1024, MSG_DONTWAIT);
+	ft_putendl(buffer);
 	if (!bytes_read)
 	{
 		close_connection(game, fd);
