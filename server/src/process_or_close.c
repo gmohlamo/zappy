@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   send_eggs.c                                        :+:      :+:    :+:   */
+/*   process_or_close.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/17 16:13:03 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/17 17:38:03 by gmohlamo         ###   ########.fr       */
+/*   Created: 2019/12/15 19:43:50 by gmohlamo          #+#    #+#             */
+/*   Updated: 2019/12/26 12:41:34 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <gfx.h>
+#include <zappy.h>
 
-void			send_eggs(t_game *game, int x, int y)
+void			process_or_close(t_game *game, t_connection *conn)
 {
-	t_egg		*eggs;
-	char		*str;
 	char		*temp;
 
-	while (eggs)
+	temp = NULL;
+	if (conn->line)
 	{
-		if (eggs->x == x && eggs->y == y)
-		{
-			str = ft_strjoin("egg ", eggs->team->name);
-			temp = ft_strjoin(str, "\n");
-			send(game->gfx, str, ft_strlen(str), MSG_DONTWAIT);
-		}
-		eggs = eggs->next;
+		temp = ft_strsafejoin(conn->line, game->gfx_line);
+		ft_strdel(&(conn->line));
+		ft_strdel(&(game->gfx_line));
 	}
+	else
+		conn->line = game->gfx_line;
+	game->gfx_line = NULL;
+	if (ft_strchr(conn->line, '\n'))//at this point we are ready to process this
+	//line or close this connection
+		assign_conn(game, conn);
 }

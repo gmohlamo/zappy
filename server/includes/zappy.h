@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/23 10:13:45 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/26 13:02:34 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct				s_connection
 typedef struct				s_egg
 {
 	t_team					*team;
+	size_t					life;
 	int						x;
 	int						y;
 	struct s_egg			*next;
@@ -139,6 +140,7 @@ typedef struct				s_game //hold the entire game state
 	fd_set					wset;
 	t_connection			*connections;
 	t_client				*clients;
+	t_egg					*eggs;
 	t_team					*teams;
 	t_objects				*objects;
 	void					(*operations[13])(); //array of functions to use when running operations from a client
@@ -152,12 +154,12 @@ t_connection				*find_conn(t_game *game, int fd);
 t_client					*find_client(t_game *game, int fd);
 void						assign_conn(t_game *game, t_connection *conn);
 void						run_game(t_game *game);
-void						init_client(t_client *client, t_game *game);
+void						init_client(t_client *client, t_connection *conn, t_game *game);
 char						*parse_args(t_game *game, char **av, int ac);
 void						usage_exit(void);
 void						append_line(t_game *game, t_client *client);
 void						append_client(t_game *game, t_connection *client,
-	char *team_name);
+	t_team *team);
 void						send_init_gfx(t_game *game);
 void						append_connection(t_game *game, t_connection *conn);
 void						process_line(t_game *game, int fd);

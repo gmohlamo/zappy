@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 10:19:38 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/23 10:44:55 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/26 13:03:02 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,14 @@ void		assign_conn(t_game *game, t_connection *conn)
 	}
 	while (itr < game->team_count)
 	{
+		ft_putstr("current team name: ");
+		ft_putendl(game->teams[itr].name);
+		ft_putstr("requested team name: ");
+		ft_putstr(conn->line);
 		if (ft_strstr(conn->line, game->teams[itr].name))
 		{
-			append_client(game, conn, game->team_names[itr]);
+			ft_putendl("found matching team");
+			append_client(game, conn, &(game->teams[itr]));
 			return ;
 		}
 		itr++;
