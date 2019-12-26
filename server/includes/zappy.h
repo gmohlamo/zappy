@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/26 13:02:34 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/26 13:49:51 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct				s_client //represent each client
 	size_t					life;
 	size_t					cost;
 	size_t					orientation;
+	size_t					nbr; //client number
 	t_list					*lines;
 	t_inv					*inventory;
 	struct timeval			tv;
@@ -172,6 +173,7 @@ void						send_init_gfx(t_game *game);
 void						add_gfx(t_game *game, t_connection *conn);
 void						update_gfx(t_game *game, t_client *client);
 char						*ft_strjoinint(char *str, int n);
+size_t						client_nbr(t_game *game);
 //client operations
 void						advance_op(t_game *game, t_client *client);
 void						connect_nbr_op(t_game *game, t_client *client);
@@ -189,5 +191,6 @@ void						broadcast_op(t_game *game, t_client *client);
 //client specific gfx
 void						client_advance_gfx(t_game *game, t_client *client);
 void						client_death_update(t_game *game, t_client *client);
+void						update_gfx_client(t_game *game, t_client *client);
 
 #endif
