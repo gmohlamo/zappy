@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:23 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/26 13:49:15 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/28 16:49:19 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static t_client	*new_client(t_game *game, t_connection *conn, t_team *team)
 		send(client->fd, buffer, ft_strlen(buffer), MSG_DONTWAIT);
 	}
 	update_gfx_client(game, client);
+	gettimeofday(&(client->tv), &(client->tz)); //start draining life
+	printf("life starts here");
 	return (client);
 }
 

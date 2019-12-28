@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:25:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/23 10:30:29 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/28 17:41:25 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,21 @@ void		close_gfx(t_game *game, char *msg)
 	close_clients(game);
 }
 
-void				match_line(t_game *game, int fd)
+t_client			*match_line(t_game *game, int fd)
 {
 	t_connection	*conn;
 	t_client		*client;
 
+	client = NULL;
+	conn = NULL;
 	if ((client = find_client(game, fd)))
 		append_line(game, client);
 	else if ((conn = find_conn(game, fd)))
 		process_or_close(game, conn);
+	return (client);
 }
 
-void				process_line(t_game *game, int fd)
+t_client			*process_line(t_game *game, int fd)
 {
 	char			buffer[1025];
 	char			*temp;
@@ -43,11 +46,11 @@ void				process_line(t_game *game, int fd)
 	if (!bytes_read)
 	{
 		close_connection(game, fd);
-		return ;
+		return (NULL);
 	}
 	temp = ft_strsafejoin(game->gfx_line, buffer);
 	if (game->gfx_line)
 		free(game->gfx_line);
 	game->gfx_line = temp;
-	match_line(game, fd);
+	return (match_line(game, fd));
 }

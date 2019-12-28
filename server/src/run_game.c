@@ -70,6 +70,7 @@ void				process_clients(t_game *game)
 		}
 		itr++;
 	}
+	run_commands(game);
 }
 
 void				run_game(t_game *game)

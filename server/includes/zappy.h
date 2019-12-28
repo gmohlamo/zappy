@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/26 13:49:51 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/28 17:46:43 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
 //enums for operations and resources
 enum e_operations {advance, right, left, see, inventory, take, put, kick,
-	broadcast, incantation, spawn, connect_nbr, death};
+	broadcast, incantation, spawn, connect_nbr, death, none};
 enum e_resource_type {food, linemate, deraumere, sibur, mendiane, phiras, thystame};
 typedef struct				s_object //represent game objects
 {
@@ -72,6 +72,11 @@ typedef struct				s_inv //represent client inventory
 	struct s_inv			*next;
 }							t_inv;
 
+typedef struct				s_calc
+{
+	struct timeval			tv;
+	struct timezone			tz;
+}							t_calc;
 typedef struct				s_client //represent each client
 {
 	int						fd;
@@ -84,7 +89,7 @@ typedef struct				s_client //represent each client
 	size_t					nbr; //client number
 	t_list					*lines;
 	t_inv					*inventory;
-	struct timeval			tv;
+	struct timeval			tv; //using this to count down life
 	struct timezone			tz;
 	struct sockaddr			addr;
 	t_team					*team;
@@ -105,6 +110,8 @@ typedef struct				s_egg
 {
 	t_team					*team;
 	size_t					life;
+	struct timeval			tv;
+	struct timezone			tz;
 	int						x;
 	int						y;
 	struct s_egg			*next;
@@ -129,8 +136,6 @@ typedef struct				s_game //hold the entire game state
 	size_t					team_count;
 	char					**team_names;
 	useconds_t				timeout;
-	struct timeval			tv;
-	struct timezone			tz;
 	struct sockaddr_storage	remoteaddr;//server address information
 	struct addrinfo 		hints;
 	struct addrinfo			*result;
@@ -148,6 +153,7 @@ typedef struct				s_game //hold the entire game state
 }							t_game;
 
 t_game      				*init_game(char **av, int ac);
+void						add_operations(t_game *game);
 t_team						*init_teams(t_game *game);
 t_team						*check_team(t_game *game, char *team_name);
 t_client					*client(t_game *game, int fd);
@@ -163,7 +169,7 @@ void						append_client(t_game *game, t_connection *client,
 	t_team *team);
 void						send_init_gfx(t_game *game);
 void						append_connection(t_game *game, t_connection *conn);
-void						process_line(t_game *game, int fd);
+t_client					*process_line(t_game *game, int fd);
 void						close_clients(t_game *game);
 void						close_connection(t_game *game, int fd);
 void						process_or_close(t_game *game, t_connection *conn);
@@ -174,6 +180,10 @@ void						add_gfx(t_game *game, t_connection *conn);
 void						update_gfx(t_game *game, t_client *client);
 char						*ft_strjoinint(char *str, int n);
 size_t						client_nbr(t_game *game);
+//command processing
+void						run_commands(t_game *game);
+void						adjust_client_life(t_game *game, t_client *client,
+	t_calc *calc, size_t diff);
 //client operations
 void						advance_op(t_game *game, t_client *client);
 void						connect_nbr_op(t_game *game, t_client *client);
