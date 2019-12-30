@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/28 17:46:43 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/30 14:57:41 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define CMD_BACKLOG 10
 # define CLIENT_ALLOC_ERR "Error: Unable to allocate memory for client"
 # define ERR_ACCEPT "Error: Unable to accept socket connection"
+# define ELEVATE "elevation in progress"
 # define GFX "GRAPHICS"
 
 //enums for operations and resources
@@ -164,7 +165,7 @@ void						run_game(t_game *game);
 void						init_client(t_client *client, t_connection *conn, t_game *game);
 char						*parse_args(t_game *game, char **av, int ac);
 void						usage_exit(void);
-void						append_line(t_game *game, t_client *client);
+bool						append_line(t_game *game, t_client *client);
 void						append_client(t_game *game, t_connection *client,
 	t_team *team);
 void						send_init_gfx(t_game *game);
@@ -180,6 +181,9 @@ void						add_gfx(t_game *game, t_connection *conn);
 void						update_gfx(t_game *game, t_client *client);
 char						*ft_strjoinint(char *str, int n);
 size_t						client_nbr(t_game *game);
+enum e_operations			get_op(t_client *client);
+void						add_op_cost(t_client *client);
+void						move_backlog(t_game *game, t_client *client);
 //command processing
 void						run_commands(t_game *game);
 void						adjust_client_life(t_game *game, t_client *client,

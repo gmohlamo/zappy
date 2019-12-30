@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:25:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/28 17:41:25 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/30 14:57:20 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,17 @@ t_client			*match_line(t_game *game, int fd)
 {
 	t_connection	*conn;
 	t_client		*client;
+	bool			append;
 
 	client = NULL;
 	conn = NULL;
+	append = false;
 	if ((client = find_client(game, fd)))
-		append_line(game, client);
+		append = append_line(game, client);
 	else if ((conn = find_conn(game, fd)))
 		process_or_close(game, conn);
+	if (append == false && client)
+		ft_strdel((char**)&(game->gfx_line));
 	return (client);
 }
 
