@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:36 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/16 17:05:15 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/30 15:15:47 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char		*parse_args(t_game *game, char **av, int ac)
 		else if (ft_strequ(av[itr], "-c") && itr < ac -1)
 			game->allowed_clients = get_dim(av[itr + 1]);
 		else if (ft_strequ(av[itr], "-t") && itr < ac -1)
-			game->timeout = 1000000 / get_dim(av[itr + 1]);
+			game->timeout = get_dim(av[itr + 1]);
 		itr++;
 	}
 	get_teams(game, av, ac);

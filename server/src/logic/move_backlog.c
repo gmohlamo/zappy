@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 07:32:01 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/30 15:07:06 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/30 16:03:40 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,13 @@ void				move_backlog(t_game *game, t_client *client)
 {
 	t_list			*line;
 
+	if (client->op_complete == false)
+		return ;
 	if (client->lines == NULL)
 		return ;
+	if (!ft_strchr((char*)client->lines->content, '\n'))
+		return ;
+	ft_putendl("moving backlog");
 	line = client->lines->next; //cause we're gonna delete the current line
 	ft_memdel(&(client->lines->content));
 	ft_memdel((void**)&(client->lines));

@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 17:01:39 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/30 15:11:21 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/30 16:04:39 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void			process_command(t_game *game, t_client *client)
 	//need to make sure that the functions are inserted into the game struct on initialization
 	if (client->op != death)
 		client->op = none; //gotta reset it and process the next line after this.
-	move_backlog(game, client); //get the next line in the line backlog
+	client->op_complete = true;
 }
 
 void				run_commands(t_game *game)
@@ -41,12 +41,14 @@ void				run_commands(t_game *game)
 	gettimeofday(&(c.tv), &(c.tz));
 	while (clients)
 	{
-		printf("time divide value %u\n", game->timeout);
-		diff = (c.tv.tv_sec - clients->tv.tv_sec) * game->timeout;
-		adjust_client_life(game, clients, &c, diff); //determine if the cost of the desired operation has
-		//passed of if the client has died
-		process_command(game, clients);
-		printf("client nbr -> %zu remaining life: %zu\n", clients->nbr, clients->life);
+		if (FD_ISSET(clients->fd, &(game->set)))
+		{
+			diff = (c.tv.tv_sec - clients->tv.tv_sec) * game->timeout;
+			adjust_client_life(game, clients, &c, diff); //determine if the cost of the desired operation has
+			//passed of if the client has died
+			process_command(game, clients);
+			move_backlog(game, clients); //get the next line in the line backlog
+		}
 		clients = clients->next;
 	}
 }

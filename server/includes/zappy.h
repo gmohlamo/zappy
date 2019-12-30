@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/30 14:57:41 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/30 15:59:43 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct				s_client //represent each client
 	size_t					cost;
 	size_t					orientation;
 	size_t					nbr; //client number
+	bool					op_complete; //needed to fix backlog management
 	t_list					*lines;
 	t_inv					*inventory;
 	struct timeval			tv; //using this to count down life

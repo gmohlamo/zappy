@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:25:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/30 14:57:20 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/30 15:36:07 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_client			*match_line(t_game *game, int fd)
 	t_client		*client;
 	bool			append;
 
+	ft_putendl("got into match_line()\n");
 	client = NULL;
 	conn = NULL;
 	append = false;
@@ -32,8 +33,7 @@ t_client			*match_line(t_game *game, int fd)
 		append = append_line(game, client);
 	else if ((conn = find_conn(game, fd)))
 		process_or_close(game, conn);
-	if (append == false && client)
-		ft_strdel((char**)&(game->gfx_line));
+	ft_strdel((char**)&(game->gfx_line));
 	return (client);
 }
 
@@ -53,8 +53,11 @@ t_client			*process_line(t_game *game, int fd)
 		return (NULL);
 	}
 	temp = ft_strsafejoin(game->gfx_line, buffer);
-	if (game->gfx_line)
-		free(game->gfx_line);
+	printf("about to match line\n");
+	printf("this string recieved -> %s\n", temp);
+	printf("the gfx line is set still --> %zu\n", (size_t)game->gfx_line);
+	//if (game->gfx_line)
+	//	free(game->gfx_line);
 	game->gfx_line = temp;
 	return (match_line(game, fd));
 }
