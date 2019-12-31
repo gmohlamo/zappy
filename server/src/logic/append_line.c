@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 17:50:44 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/30 16:17:27 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/31 09:56:47 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static bool		add_new_line(t_client *client, t_game *game)
 		ft_putendl("Got into the first condition");
 		ft_putendl(game->gfx_line);
 		client->lines = ft_memalloc(sizeof(t_list));
-		client->lines->content = game->gfx_line;
+		client->lines->content = ft_strdup(game->gfx_line);
 		ft_strdel(&game->gfx_line);
 		return (true);
 	}

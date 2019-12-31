@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 08:54:35 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/30 14:47:06 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/31 09:58:54 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,6 @@ void				add_op_cost(t_client *client)
 		client->cost = 42;
 	else
 		client->cost = 0;
+	if (client->op != none)
+		client->op_complete = false;
 }

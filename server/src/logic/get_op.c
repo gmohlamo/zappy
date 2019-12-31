@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 07:42:00 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/29 08:06:02 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2019/12/31 09:46:33 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 enum e_operations		get_op(t_client *client)
 {
+	ft_putendl("adding op_code");
 	if (ft_strstr((char*)client->lines->content, "advance"))
 		return (advance);
 	else if (ft_strstr((char*)client->lines->content, "right"))
