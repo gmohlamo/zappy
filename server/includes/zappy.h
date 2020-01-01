@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/30 15:59:43 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/01 12:09:00 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct				s_object //represent game objects
 {
 	int						x;
 	int						y;
-	size_t					count;
 	enum e_resource_type	type;
 }							t_object;
 
@@ -65,12 +64,19 @@ typedef struct				s_objects //hold all objects in the game world.
 	size_t					count;
 	t_object				*objects;
 }							t_objects;
+
+/*
+** t_inv has been redesigned so information on what is in it can be aquired faster
+*/
 typedef struct				s_inv //represent client inventory
 {
-	int						x;
-	int						y;
-	t_objects				*items;
-	struct s_inv			*next;
+	size_t					food_count;
+	size_t					linemate_count;
+	size_t					deraumere_count;
+	size_t					sibur_count;
+	size_t					mendiane_count;
+	size_t					phiras_count;
+	size_t					thystame_count;
 }							t_inv;
 
 typedef struct				s_calc
@@ -176,11 +182,15 @@ void						close_clients(t_game *game);
 void						close_connection(t_game *game, int fd);
 void						process_or_close(t_game *game, t_connection *conn);
 void						remove_conn(t_game *game, t_connection *target);
-void						block_contents(t_game *game, int x, int y);
+char						*block_contents(t_game *game, int x, int y);
 void						send_init_gfx(t_game *game);
+void						concat_gfx_line(char **gfx_line, char *str);
+char						*concat_resource(char **str, char *resource);
 void						add_gfx(t_game *game, t_connection *conn);
 void						update_gfx(t_game *game, t_client *client);
+char						*concat_results(char **str, char *resource);
 char						*ft_strjoinint(char *str, int n);
+void						generate_resources(t_game *game);
 size_t						client_nbr(t_game *game);
 enum e_operations			get_op(t_client *client);
 void						add_op_cost(t_client *client);

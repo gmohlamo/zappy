@@ -79,7 +79,7 @@ void				run_game(t_game *game)
 
 	elapse.tv_sec = 0;
 	elapse.tv_usec = 0;
-	ft_putendl("About to run game");
+	generate_resources(game);
 	while (1)
 	{
 		game->rset = game->set;

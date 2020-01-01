@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 16:14:18 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/20 14:52:12 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/01 10:44:00 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <zappy.h>
 
-void		send_eggs(t_game *game, int x, int y);
+bool		send_eggs(t_game *game, char **gfx_line, int x, int y);
 void		nbr_client(t_game *game, t_client *client);
 
 # endif

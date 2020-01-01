@@ -1,41 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_up.c                                         :+:      :+:    :+:   */
+/*   concat_gfx_line.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/10 16:43:45 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/31 10:55:00 by gmohlamo         ###   ########.fr       */
+/*   Created: 2019/12/31 16:55:19 by gmohlamo          #+#    #+#             */
+/*   Updated: 2020/01/01 13:18:38 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <zappy.h>
 
-void			clean_lines(t_list *lines)
+void		concat_gfx_line(char **gfx_line, char *str)
 {
-	t_list *line;
+	char	*temp;
 
-	while (lines)
-	{
-		line = lines;
-		lines = lines->next;
-		free(line);
-	}
-}
-
-void			close_clients(t_game *game)
-{
-	t_client	*client;
-	t_client	*ptr;
-
-	ptr = game->clients;
-	while (ptr)
-	{
-		client = ptr;
-		ptr = ptr->next;
-		free(client->inventory);
-		clean_lines(client->lines);
-		free(client);
-	}
+	temp = ft_strsafejoin(*gfx_line, str);
+	free(str);
+	*gfx_line = temp;
 }

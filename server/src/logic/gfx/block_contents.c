@@ -6,26 +6,12 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 12:45:52 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/23 11:39:36 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/01 13:17:09 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <zappy.h>
 #include <gfx.h>
-
-static char		*cat_resource(char *str, t_object *objects)
-{
-	char		*temp;
-	char		*temp2;
-
-	temp = ft_itoa(objects->type);
-	temp2 = ft_strjoin(str, temp);
-	free(str);
-	free(temp);
-	str = ft_strjoin(temp2, "\n");
-	free(temp2);
-	return (str);
-}
 
 static char		*add_orientation(char *str, size_t orientation)
 {
@@ -39,13 +25,13 @@ static char		*add_orientation(char *str, size_t orientation)
 }
 
 //sends client information in the block to the gfx
-static void		send_client(t_game *game, t_client *client, size_t index)
+static char		*send_client(t_game *game, char **gfx_line, t_client *client)
 {
 	char		*str;
 	char		*temp;
 
 	str = ft_strdup("client ");
-	temp = ft_strjoinint(str, index);
+	temp = ft_strjoinint(str, client->nbr);
 	free(str);
 	str = ft_strjoin(temp, " ");
 	free(temp);
@@ -59,56 +45,80 @@ static void		send_client(t_game *game, t_client *client, size_t index)
 	free(temp);
 	temp = str;
 	str = ft_strjoin(temp, "\n");
-	send(game->gfx, str, ft_strlen(str), MSG_DONTWAIT);
-	free(str);
 	free(temp);
+	concat_gfx_line(gfx_line, str);
+	return (*gfx_line);
 }
 
-void			send_clients(t_game *game, t_client *clients, int x, int y)
+bool			send_clients(t_game *game, char **gfx_line, t_client *clients, int x, int y)
 {
 	size_t		count;
+	char		*str;
 
+	str = NULL;
 	count = 0;
 	while (clients)
 	{
-		count++;
 		if (clients->x == x && clients->y == y)
-			send_client(game, clients, count);
+			str = send_client(game, gfx_line, clients);
 		clients = clients->next;
 	}
-}
-
-void			send_objects(t_game *game, int x, int y)
-{
-	t_object	*objects;
-	char		*str;
-	size_t		count;
-
-	str = NULL;
-	objects = game->objects != NULL ? game->objects->objects: NULL;
-	if (objects == NULL)
-		return ;
-	count = game->objects->count;
-	while (count)
+	if (str)
 	{
-		if (objects->x == x && objects->y == y)
-		{
-			str = ft_strdup("resource ");
-			str = cat_resource(str, objects);
-			send(game->gfx, str, ft_strlen(str), MSG_DONTWAIT);
-			free(str);
-		}
-		count--;
+		concat_gfx_line(gfx_line, str);
+		return (true);
 	}
+	return (false);
 }
 
-void			block_contents(t_game *game, int x, int y)
+/*
+** send_objects()
+** should append to the gfx_str the objects in the string
+*/
+
+bool			send_objects(t_game *game, char **gfx_str, int x, int y)
 {
+	t_objects	*objects;
+	char		*str;
+	char		buffer[64];
+	size_t		count;
+	size_t		itr;
+
+	itr = 0;
+	objects = game->objects;
+	ft_bzero(buffer, 64);
+	str = NULL;
+	count = 0;
+	while (itr < objects->count)
+	{
+		if (objects->objects[itr].x == x &&
+			objects->objects[itr].y == y)
+		{
+			sprintf(buffer, "resource %d\n", objects->objects[itr].type);
+			if (!str)
+				str = ft_strdup(buffer);
+			else
+				concat_resource(&str, buffer);
+			count++;
+		}
+		itr++;
+	}
+	if (str)
+		concat_gfx_line(gfx_str, str);
+	return (count > 0? true : false);
+}
+
+char			*block_contents(t_game *game, int x, int y)
+{
+	char		**gfx_str;
+	char		*str;
 	t_client	*clients;
 
+	gfx_str = ft_memalloc(sizeof(char**));
 	clients = game->clients;
-	send_objects(game, x, y);
-	ft_putendl("sending clients in the block");
-	send_clients(game, clients, x, y);
-	send_eggs(game, x, y);
+	send_objects(game, gfx_str, x, y);
+	send_clients(game, gfx_str, clients, x, y);
+	send_eggs(game, gfx_str, x, y);
+	str = *gfx_str;
+	return (str);
 }
