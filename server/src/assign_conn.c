@@ -37,5 +37,5 @@ void		assign_conn(t_game *game, t_connection *conn)
 		}
 		itr++;
 	}
-	close_connection(game, conn->fd);
+	close_connection(game, conn);
 }

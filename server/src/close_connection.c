@@ -73,26 +73,26 @@ bool				find_target_connection(t_game *game, int fd)
 }
 
 //close a connection to the server
-void				close_connection(t_game *game, int fd)
+void				close_connection(t_game *game, t_connection *conn)
 {
-	t_client		*client;
-	t_client		*ptr;
+	t_connection	*next;
+	t_connection	*prev;
 
-	client = game->clients;
-	if (find_target_connection(game, fd))
-		return ;
-	while (client)
+	if (conn)
 	{
-		ptr = client;
-		if ((ptr)->fd == fd && ptr == game->clients)
+		next = conn->next;
+		prev = game->connections;
+		if (prev != conn)
 		{
-			game->clients = (ptr)->next;
-			FD_CLR((ptr)->fd, &(game->set));
-			close(ptr->fd);
-			free(ptr);
+			while (prev->next != conn)
+				prev = prev->next;
+			prev->next = next;
 		}
 		else
-			remove_client(ptr, game);
-		client = client->next;
+			game->connections = next; //make sure the rest of this code has nothing to do with what should stay in the game
+		FD_CLR(conn->fd, &(game->set)); //remove the connection file descriptor
+		close(conn->fd);
+		free(conn->line);
+		free(conn);
 	}
 }

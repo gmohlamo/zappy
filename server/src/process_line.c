@@ -12,11 +12,11 @@
 
 #include <zappy.h>
 
-void		close_gfx(t_game *game, char *msg)
+void		close_gfx(t_game *game)
 {
-	ft_putendl(msg);
+	FD_CLR(game->gfx, &(game->set));
 	close(game->gfx);
-	close_clients(game);
+	game->gfx = 0;
 }
 
 t_client			*match_line(t_game *game, int fd)
@@ -49,13 +49,20 @@ t_client			*process_line(t_game *game, int fd)
 {
 	char			buffer[1025];
 	char			*temp;
+	t_client		*client;
 
+	client = NULL;
 	ft_bzero(buffer, 1025);
 	int		bytes_read;
 	bytes_read = recv(fd, buffer, 1024, MSG_DONTWAIT);
 	if (!bytes_read)
 	{
-		close_connection(game, fd);
+		if (fd == game->gfx)
+			close_gfx(game);
+		else if ((client = find_client(game, fd)))
+			close_client(game, client);
+		else
+			close_connection(game, find_conn(game, fd));
 		return (NULL);
 	}
 	temp = ft_strsafejoin(game->gfx_line, buffer);

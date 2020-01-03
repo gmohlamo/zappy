@@ -14,11 +14,11 @@
 
 void			process_or_close(t_game *game, t_connection *conn)
 {
-	char		*temp;
+	//char		*temp;
 
 	ft_putendl("process or close connection");
-	temp = NULL;
-	/*if (conn->line)
+	/*temp = NULL;
+	if (conn->line)
 	{
 		ft_putendl("connection had a line already");
 		temp = ft_strsafejoin(conn->line, game->gfx_line);

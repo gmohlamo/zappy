@@ -16,6 +16,8 @@
 void			add_gfx(t_game *game, t_connection *conn)
 {
 	game->gfx = conn->fd;
+	FD_SET(game->gfx, &(game->set)); //also gotta process
+	//some requests from the client
 	remove_conn(game, conn);
 	send_init_gfx(game);
 }
