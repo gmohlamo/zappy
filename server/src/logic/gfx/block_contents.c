@@ -19,7 +19,6 @@ static char		*add_orientation(char *str, size_t orientation)
 	char		*temp2;
 
 	temp = ft_strjoinint(str, orientation);
-	temp2 = ft_strjoin(temp, " ");
 	free(temp);
 	return (temp2);
 }
@@ -41,7 +40,9 @@ static char		*send_client(t_game *game, char **gfx_line, t_client *client)
 	free(temp);
 	temp = ft_strjoinint(str, client->level);
 	free(str);
-	str = add_orientation(temp, client->orientation);
+	str = ft_strjoin(temp, " ");
+	free(temp);
+	temp = add_orientation(str, client->orientation);
 	free(temp);
 	temp = str;
 	str = ft_strjoin(temp, "\n");
@@ -63,12 +64,7 @@ bool			send_clients(t_game *game, char **gfx_line, t_client *clients, int x, int
 			str = send_client(game, gfx_line, clients);
 		clients = clients->next;
 	}
-	if (str)
-	{
-		concat_gfx_line(gfx_line, str);
-		return (true);
-	}
-	return (false);
+	return (str ? true: false);
 }
 
 /*
