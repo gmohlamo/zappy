@@ -172,6 +172,7 @@ void						run_game(t_game *game);
 void						init_client(t_client *client, t_connection *conn, t_game *game);
 char						*parse_args(t_game *game, char **av, int ac);
 void						usage_exit(void);
+void           				gfx_commands(t_game *game);
 bool						append_line(t_game *game, t_client *client);
 void						append_client(t_game *game, t_connection *client,
 	t_team *team);

@@ -13,13 +13,29 @@
 #include <zappy.h>
 
 /*
+** no_op()
+** move the to the next lien if the operation is not supported
+*/
+
+static enum e_operations	no_op(t_client *client)
+{
+	t_list					*list;
+
+	list = client->lines;
+	client->lines = list->next;
+	free(list->content);
+	free(list);
+	return (none);
+}
+
+/*
 ** get_op()
 ** add the right op command
 ** bear in mind that spawn is the fork command.
 ** apart from fork, the other commands match their enum values
 */
 
-enum e_operations		get_op(t_client *client)
+enum e_operations			get_op(t_client *client)
 {
 	ft_putendl("adding op_code");
 	if (ft_strstr((char*)client->lines->content, "advance"))
@@ -46,5 +62,5 @@ enum e_operations		get_op(t_client *client)
 		return (spawn);
 	else if (ft_strstr((char*)client->lines->content, "connect_nbr"))
 		return (connect_nbr);
-	return (none);
+	return (no_op(client));
 }

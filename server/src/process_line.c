@@ -33,6 +33,8 @@ t_client			*match_line(t_game *game, int fd)
 		append = append_line(game, client);
 	else if ((conn = find_conn(game, fd)))
 		process_or_close(game, conn);
+	else if (fd == game->gfx)
+		gfx_commands(game);
 	ft_strdel((char**)&(game->gfx_line));
 	return (client);
 }
@@ -52,6 +54,7 @@ t_client			*process_line(t_game *game, int fd)
 	t_client		*client;
 
 	client = NULL;
+	temp = NULL;
 	ft_bzero(buffer, 1025);
 	int		bytes_read;
 	bytes_read = recv(fd, buffer, 1024, MSG_DONTWAIT);
