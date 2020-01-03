@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:25:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/30 15:36:07 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/03 02:28:38 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ t_client			*process_line(t_game *game, int fd)
 	printf("about to match line\n");
 	printf("this string recieved -> %s\n", temp);
 	printf("the gfx line is set still --> %zu\n", (size_t)game->gfx_line);
-	//if (game->gfx_line)
-	//	free(game->gfx_line);
+	if (game->gfx_line)
+		free(game->gfx_line);
 	game->gfx_line = temp;
 	return (match_line(game, fd));
 }

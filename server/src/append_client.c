@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:23 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/28 16:49:19 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/03 02:34:53 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static t_client	*new_client(t_game *game, t_connection *conn, t_team *team)
 	update_gfx_client(game, client);
 	gettimeofday(&(client->tv), &(client->tz)); //start draining life
 	printf("life starts here");
+	remove_conn(game, conn);
 	return (client);
 }
 
