@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:18:33 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/18 12:57:12 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/03 22:36:15 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void		advance_op(t_game *game, t_client *client)
 {
+	t_list	*lst;
+
 	if (!client->cost)
 	{
 		if (client->orientation == 0)
@@ -25,6 +27,12 @@ void		advance_op(t_game *game, t_client *client)
 		else
 			client->x = (client->x - 1) % game->x;
 	}
+	lst = client->lines;
+	client->lines = lst->next;
+	free(lst->content);
+	free(lst);
 	send(client->fd, "ok\n", 3, MSG_DONTWAIT);
+	client->op = none;
+	client->op_complete = true;
 	update_gfx(game, client);
 }

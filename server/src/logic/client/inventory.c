@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:17:54 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/18 13:09:44 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/03 22:50:52 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,13 @@
 //send inventory information to the client in JSON format
 void			inventory_op(t_game *game, t_client *client)
 {
-	;
+	t_list				*lst;
+
+	lst = client->lines;
+	client->lines = lst->next;
+	free(lst->content);
+	free(lst);
+	send(client->fd, "ok\n", 3, MSG_DONTWAIT);
+	client->op = none;
+	client->op_complete = true;
 }

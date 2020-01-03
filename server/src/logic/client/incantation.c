@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:16:39 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/19 11:29:47 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/03 22:50:49 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,13 @@
 
 void		incantation_op(t_game *game, t_client *client)
 {
-	;
+	t_list				*lst;
+
+	lst = client->lines;
+	client->lines = lst->next;
+	free(lst->content);
+	free(lst);
+	send(client->fd, "ok\n", 3, MSG_DONTWAIT);
+	client->op = none;
+	client->op_complete = true;
 }

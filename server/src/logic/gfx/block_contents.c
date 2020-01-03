@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 12:45:52 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/01 13:17:09 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/03 18:00:36 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@
 static char		*add_orientation(char *str, size_t orientation)
 {
 	char		*temp;
-	char		*temp2;
 
 	temp = ft_strjoinint(str, orientation);
-	free(temp);
-	return (temp2);
+	return (temp);
 }
 
 //sends client information in the block to the gfx
@@ -43,11 +41,11 @@ static char		*send_client(t_game *game, char **gfx_line, t_client *client)
 	str = ft_strjoin(temp, " ");
 	free(temp);
 	temp = add_orientation(str, client->orientation);
-	free(temp);
-	temp = str;
-	str = ft_strjoin(temp, "\n");
-	free(temp);
-	concat_gfx_line(gfx_line, str);
+	free(str);
+	str = temp;
+	temp = ft_strjoin(str, "\n");
+	free(str);
+	concat_gfx_line(gfx_line, temp);
 	return (*gfx_line);
 }
 

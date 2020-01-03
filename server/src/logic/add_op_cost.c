@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 08:54:35 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/31 09:58:54 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/03 22:57:18 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void				add_op_cost(t_client *client)
 {
+	client->op_complete = false;
 	if (client->op == advance || client->op == right || client->op == left ||
 		client->op == see || client->op == take || client->op == put ||
 		client->op == broadcast)
