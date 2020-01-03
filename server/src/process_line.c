@@ -37,16 +37,22 @@ t_client			*match_line(t_game *game, int fd)
 	return (client);
 }
 
+/*
+** process_line()
+** reads input from the file descriptor
+** adds a list struct to the connection to hold the line.
+** works much like a circular buffer
+** it is dynamic in size though, but that can be configured in zappy.h
+*/
+
 t_client			*process_line(t_game *game, int fd)
 {
 	char			buffer[1025];
 	char			*temp;
 
-	printf("About to process line\n");
 	ft_bzero(buffer, 1025);
 	int		bytes_read;
 	bytes_read = recv(fd, buffer, 1024, MSG_DONTWAIT);
-	ft_putendl(buffer);
 	if (!bytes_read)
 	{
 		close_connection(game, fd);
@@ -54,8 +60,6 @@ t_client			*process_line(t_game *game, int fd)
 	}
 	temp = ft_strsafejoin(game->gfx_line, buffer);
 	printf("about to match line\n");
-	printf("this string recieved -> %s\n", temp);
-	printf("the gfx line is set still --> %zu\n", (size_t)game->gfx_line);
 	if (game->gfx_line)
 		free(game->gfx_line);
 	game->gfx_line = temp;

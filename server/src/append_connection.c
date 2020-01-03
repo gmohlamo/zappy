@@ -12,8 +12,12 @@
 
 #include <zappy.h>
 
-//so when a new connection is accepted, we will append it to a list of connections
-//this will allow us to figure out if we have a connection from a client or the gfx
+/*
+** append_connection()
+** when a new connection is accepted, we will append it to a list of connections
+** this will allow us to figure out if we have a connection for a client(player) or the gfx
+*/
+
 void				append_connection(t_game *game, t_connection *conn)
 {
 	t_connection	*ptr;

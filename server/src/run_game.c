@@ -53,7 +53,7 @@ void				connect_gfx(t_game *game)
 	//unless the gfx socket has been confirmed.
 }//should have the graphical client connected here
 
-void				process_clients(t_game *game)
+static void			process_clients(t_game *game)
 {
 	int				itr;
 	

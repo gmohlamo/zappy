@@ -41,7 +41,7 @@ void				run_commands(t_game *game)
 	gettimeofday(&(c.tv), &(c.tz));
 	while (clients)
 	{
-		if (FD_ISSET(clients->fd, &(game->set)))
+		if (clients->fd != -1)
 		{
 			diff = (c.tv.tv_sec - clients->tv.tv_sec) * game->timeout;
 			adjust_client_life(game, clients, &c, diff); //determine if the cost of the desired operation has

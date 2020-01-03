@@ -15,6 +15,8 @@
 
 void			client_death_update(t_game *game, t_client *client)
 {
+	if (!game->gfx)
+		return ;
 	send(game->gfx, "death ", 6, MSG_DONTWAIT);
 	nbr_client(game, client);
 	send(game->gfx, "\n", 1, MSG_DONTWAIT);

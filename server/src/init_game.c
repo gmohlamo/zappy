@@ -80,7 +80,6 @@ t_game      *init_game(char **av, int ac)
 	if (game)
 	{
 		addr = parse_args(game, av, ac);
-		ft_putendl("successfully parsed args");
 		game->gfx_bool = false;
 		ft_memset(&(game->hints), 0, sizeof(struct addrinfo));
 		game->socklen = sizeof(struct sockaddr);
@@ -95,9 +94,7 @@ t_game      *init_game(char **av, int ac)
 			free(game);
 			exit(1);
 		}
-		ft_putendl("Got connection information");
 		checkaddr(game);
-		ft_putendl("About to connect");
 		conn_listen(game);
 		add_operations(game);
 	}
