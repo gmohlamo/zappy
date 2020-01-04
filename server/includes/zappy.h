@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/01 12:09:00 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/04 10:25:39 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@
 enum e_operations {advance, right, left, see, inventory, take, put, kick,
 	broadcast, incantation, spawn, connect_nbr, death, none};
 enum e_resource_type {food, linemate, deraumere, sibur, mendiane, phiras, thystame};
+const char					resources[] = {
+	"food", "linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"
+};
 typedef struct				s_object //represent game objects
 {
 	int						x;
@@ -196,7 +199,11 @@ void						generate_resources(t_game *game);
 size_t						client_nbr(t_game *game);
 enum e_operations			get_op(t_client *client);
 void						add_op_cost(t_client *client);
+void						add_json_array(char **str, char *buffer);
+void						array_json_end(char **str);
 void						move_backlog(t_game *game, t_client *client);
+char						*see_block(t_game *game, t_client *client,
+	int x, int y);
 //command processing
 void						run_commands(t_game *game);
 void						adjust_client_life(t_game *game, t_client *client,
