@@ -62,7 +62,7 @@ static void		get_clients(t_game *game, t_client *client, char **str, int x, int 
 static void		array_end(char **str)
 {
 	char		*ptr;
-	char		*start = "[ ";
+	char		*start = "[";
 	char		*end = "]";
 
 	ptr = ft_strsafejoin(start, *str);

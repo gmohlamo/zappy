@@ -27,6 +27,9 @@ static void		add_seen(t_game *game, char **str, char *add, size_t num)
 	temp = ft_strjoinint(seen, num);
 	ft_strdel(str);
 	ft_strdel(&seen);
+	seen = ft_strjoin(temp, ": ");
+	ft_strdel(&temp);
+	temp = seen;
 	seen = ft_strjoin(temp, add);
 	ft_strdel(&add);
 	ft_strdel(&temp);
@@ -77,7 +80,7 @@ void			send_seen(t_game *game, t_client *client, t_list *coords)
 		num++;
 	}
 	ptr = ft_strjoin(str, "}\n");
-	send(game->gfx, ptr, ft_strlen(ptr), MSG_DONTWAIT);
+	send(client->fd, ptr, ft_strlen(ptr), MSG_DONTWAIT);
 	ft_strdel(&ptr);
 	ft_strdel(&str);
 	//this should send block contents to the client.

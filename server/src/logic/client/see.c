@@ -42,7 +42,6 @@ void			see_op(t_game *game, t_client *client)
 	else
 		see_west(game, client, &blocks);
 	send_seen(game, client, blocks);
-	ft_lstdel(&blocks, delete_seen);
 	client->op = none;
 	client->op_complete = true;
 	lst = client->lines;
