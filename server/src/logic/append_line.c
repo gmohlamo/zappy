@@ -19,25 +19,16 @@
 static bool		add_new_line(t_client *client, t_game *game)
 {
 	t_list		*lines;
+	char		*temp;
 
-	lines = NULL;
-	ft_putendl("adding a new line");
-	if (!client->lines)
+	temp = NULL;
+	lines = client->lines;
+	if (!lines)
 	{
-		ft_putendl("Got into the first condition");
-		ft_putendl(game->gfx_line);
 		client->lines = ft_memalloc(sizeof(t_list));
 		client->lines->content = ft_strdup(game->gfx_line);
-		ft_strdel(&game->gfx_line);
-		return (true);
+		ft_strdel(&(game->gfx_line));
 	}
-	else
-		lines = client->lines;
-	while (lines->next)
-		lines = lines->next;
-	lines->next = ft_memalloc(sizeof(t_list));
-	lines->next->content = game->gfx_line;
-	ft_strdel(&game->gfx_line);
 	return (true);
 }
 
@@ -46,24 +37,43 @@ static bool		add_new_line(t_client *client, t_game *game)
 ** finds the latest line to add too
 */
 
-t_list			*find_line(t_client *client, size_t *count)
+static t_list	*find_line(t_client *client, size_t *count)
 {
 	t_list		*lines;
 
 	lines = client->lines;
-	while ((lines && *count <= CMD_BACKLOG))
+	while (lines && *count < CMD_BACKLOG)
 	{
-		if (!ft_strchr((char*)(lines->content), '\n'))
-			break ;
-		(*count)++;
+		*count = *count + 1;
+		if (!ft_strchr(lines->content, '\n'))
+			return (lines);
 		lines = lines->next;
 	}
-	return (lines);
+	return (NULL);
+}
+
+static bool		concat_line(t_game *game, t_client *client, size_t count)
+{
+	t_list		*lines;
+
+	lines = client->lines;
+	if (count + 1 >= CMD_BACKLOG)
+	{
+		ft_strdel(&(game->gfx_line));
+		return (false);
+	}
+	while (lines->next)
+		lines = lines->next;
+	lines->next = ft_memalloc(sizeof(t_list));
+	lines->next->content = game->gfx_line;
+	game->gfx_line = NULL;
+	return (true);
 }
 
 /*
 ** append_line()
 ** should append to the last line in the backlog of allowed lines --> 10
+** TODO fix this POS stat
 */
 
 bool			append_line(t_game *game, t_client *client)
@@ -72,22 +82,22 @@ bool			append_line(t_game *game, t_client *client)
 	size_t		count;
 	char		*str;
 
-	count = 0;
+	count = 0;	
 	lines = client->lines;
-	str = NULL;
-	ft_putendl("appending to the line");
-	lines = find_line(client, &count);
-	ft_putendl(lines? lines->content: "did not get line");
-	if (!lines && count < CMD_BACKLOG)
+	if (!lines)//this is the first line being added to the list
 		return (add_new_line(client, game));
-	else if (count >= CMD_BACKLOG)
-		return (false);
-	if (ft_strchr((char*)(lines->content), '\n'))
-		return (false);
-	str = ft_strjoin(lines->content, game->gfx_line);
-	ft_strdel((char**)&game->gfx_line);
-	free(lines->content);
-	lines->content = str;
-	ft_putendl("appended to the line");
+	else
+	{
+		lines = find_line(client, &count);
+		if (lines)
+		{
+			str = ft_strjoin(lines->content, game->gfx_line);
+			ft_memdel(&(lines->content));
+			ft_strdel(&(game->gfx_line));
+			lines->content = str;
+		}
+		else
+			return (concat_line(game, client, count));
+	}
 	return (true);
 }

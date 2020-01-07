@@ -71,7 +71,7 @@ t_client			*process_line(t_game *game, int fd)
 	temp = ft_strsafejoin(game->gfx_line, buffer);
 	printf("about to match line\n");
 	if (game->gfx_line)
-		free(game->gfx_line);
+		ft_strdel(&(game->gfx_line));
 	game->gfx_line = temp;
 	return (match_line(game, fd));
 }
