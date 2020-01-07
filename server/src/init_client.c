@@ -18,6 +18,7 @@ void		init_client(t_client *client, t_connection *conn, t_game *game)
 
 	client->fd = conn->fd;
 	client->addr = conn->addr;
+	client->inventory = ft_memalloc(sizeof(t_inv));
 	client->x = rand() % game->x;
 	client->y = rand() % game->y;
 	client->op = none;
