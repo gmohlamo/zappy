@@ -30,7 +30,7 @@ void			see_op(t_game *game, t_client *client)
 {
 	t_list		*lst;
 	t_list		*blocks;
-	char		*str = "calling the see operation\n";
+	const char	*str = "calling the see operation\n";
 
 	blocks = NULL;	
 	if (client->orientation == 0)

@@ -25,7 +25,9 @@ void		add_json_array(char **str, char *buffer)
 		temp2 = ft_strjoin(*str, temp);
 		free(*str);
 		free(temp);
-		*str = temp2; //these are subsequent objects
+		temp = ft_strjoin(temp2, buffer);
+		free(temp2);
+		*str = temp; //these are subsequent objects
 	}
 	else
 		*str = ft_strdup(buffer); //cause this is our first object
