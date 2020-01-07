@@ -15,13 +15,17 @@
 void				take_op(t_game *game, t_client *client)
 {
 	t_list			*lst;
+	char			*item;
 
-	client->orientation = (client->orientation + 1) % 4;
 	lst = client->lines;
+	item = ft_strchr((char*)lst->content, ' ');
+	if (!item)
+		send(client->fd, "ko\n", 3, MSG_DONTWAIT);
+	else
+		take_item(game, client, item);
 	client->lines = lst->next;
 	free(lst->content);
 	free(lst);
-	send(client->fd, "ok\n", 3, MSG_DONTWAIT);
 	client->op = none;
 	client->op_complete = true;
 }

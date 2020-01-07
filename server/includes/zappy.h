@@ -213,6 +213,7 @@ void						see_west(t_game *game, t_client *client,
 	t_list **blocks);
 void						see_east(t_game *game, t_client *client,
 	t_list **blocks);
+void                		take_item(t_game *game, t_client *client, char *item);
 /*
 ** command processing
 */
