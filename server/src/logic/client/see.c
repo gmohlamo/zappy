@@ -6,11 +6,19 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:18:03 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/05 04:36:38 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/06 14:20:15 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <zappy.h>
+
+static void		delete_seen(void *content, size_t size)
+{
+	if (size)
+		free(content);
+	else
+		ft_putendl_fd("Error: No size assigned to list content", 2);
+}
 
 /*
 ** see_op()
@@ -21,16 +29,20 @@
 void			see_op(t_game *game, t_client *client)
 {
 	t_list		*lst;
+	t_list		*blocks;
 	char		*str = "calling the see operation\n";
-	
+
+	blocks = NULL;	
 	if (client->orientation == 0)
-		see_north(game, client);
+		see_north(game, client, &blocks);
 	else if (client->orientation == 1)
-		see_east(game, client);
+		see_east(game, client, &blocks);
 	else if (client->orientation == 2)
-		see_south(game, client);
+		see_south(game, client, &blocks);
 	else
-		see_west(game, client);
+		see_west(game, client, &blocks);
+	send_seen(game, client, blocks);
+	ft_lstdel(&blocks, delete_seen);
 	client->op = none;
 	client->op_complete = true;
 	lst = client->lines;

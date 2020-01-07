@@ -6,12 +6,12 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/04 10:25:39 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/06 14:40:02 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_ZAPPY
-#define FT_ZAPPY
+# define FT_ZAPPY
 
 # include <stdbool.h>
 # include <libft.h>
@@ -44,9 +44,7 @@
 enum e_operations {advance, right, left, see, inventory, take, put, kick,
 	broadcast, incantation, spawn, connect_nbr, death, none};
 enum e_resource_type {food, linemate, deraumere, sibur, mendiane, phiras, thystame};
-const char					resources[] = {
-	"food", "linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"
-};
+
 typedef struct				s_object //represent game objects
 {
 	int						x;
@@ -204,11 +202,26 @@ void						array_json_end(char **str);
 void						move_backlog(t_game *game, t_client *client);
 char						*see_block(t_game *game, t_client *client,
 	int x, int y);
-//command processing
+void						send_seen(t_game *game, t_client *client,
+	t_list *coords);
+void						next_link_see(t_list *lst, int *block, size_t size);
+void						see_south(t_game *game, t_client *client,
+	t_list **blocks);
+void						see_north(t_game *game, t_client *client,
+	t_list **blocks);
+void						see_west(t_game *game, t_client *client,
+	t_list **blocks);
+void						see_east(t_game *game, t_client *client,
+	t_list **blocks);
+/*
+** command processing
+*/
 void						run_commands(t_game *game);
 void						adjust_client_life(t_game *game, t_client *client,
 	t_calc *calc, size_t diff);
-//client operations
+/*
+** client operations
+*/
 void						advance_op(t_game *game, t_client *client);
 void						connect_nbr_op(t_game *game, t_client *client);
 void						death_op(t_game *game, t_client *client);
@@ -222,7 +235,9 @@ void						right_op(t_game *game, t_client *client);
 void						see_op(t_game *game, t_client *client);
 void						take_op(t_game *game, t_client *client);
 void						broadcast_op(t_game *game, t_client *client);
-//client specific gfx
+/*
+** client specific gfx
+*/
 void						client_advance_gfx(t_game *game, t_client *client);
 void						client_death_update(t_game *game, t_client *client);
 void						update_gfx_client(t_game *game, t_client *client);
