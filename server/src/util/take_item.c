@@ -1,6 +1,31 @@
 #include <zappy.h>
 
-void                add_resource(t_client *client, enum e_resource_type resource)
+void                remove_resource(t_game *game, size_t index)
+{
+    t_objects       *objects;
+    t_object        *object;
+    size_t          count;
+
+    count = 0;
+    objects = ft_memalloc(sizeof(t_objects));
+    objects->objects = ft_memalloc(sizeof(t_object) * game->objects->count);
+    objects->count = game->objects->count;
+    object = game->objects->objects;
+    while (count < objects->count)
+    {
+        if (count == index)
+            object++;
+        ft_memmove(&(objects->objects[count]), (void*)object, sizeof(t_object));
+        count++;
+        object++;
+    }
+    free(game->objects->objects);
+    free(game->objects);
+    game->objects = objects;
+}
+
+void                add_resource(t_game *game, t_client *client,
+    enum e_resource_type resource, size_t count)
 {
     if (resource == thystame)
         client->inventory->thystame_count++;
@@ -16,6 +41,7 @@ void                add_resource(t_client *client, enum e_resource_type resource
         client->inventory->phiras_count++;
     else if (resource == food)
         client->inventory->food_count++;
+    remove_resource(game, count);
 }
 
 void                get_item(t_game *game, t_client *client, enum e_resource_type resource)
@@ -31,9 +57,7 @@ void                get_item(t_game *game, t_client *client, enum e_resource_typ
             objects->objects[count].x == client->x &&
             objects->objects[count].y == client->y)
         {
-            add_resource(client, resource);
-            objects->objects[count].x = rand() % game->x;
-            objects->objects[count].y = rand() % game->y;
+            add_resource(game, client, resource, count);
             send(client->fd, "ok\n", 3, MSG_DONTWAIT);
             return ;
         }
