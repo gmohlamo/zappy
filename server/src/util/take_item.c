@@ -56,6 +56,8 @@ void                take_item(t_game *game, t_client *client, char *item)
         get_item(game, client, phiras);
     else if (ft_strstr(item, "thystame"))
         get_item(game, client, thystame);
+    else if (ft_strstr(item, "food"))
+        get_item(game, client, food);
     else
         send(client->fd, "ko\n", 3, MSG_DONTWAIT);
 }

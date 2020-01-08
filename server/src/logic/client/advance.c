@@ -19,13 +19,13 @@ void		advance_op(t_game *game, t_client *client)
 	if (!client->cost)
 	{
 		if (client->orientation == 0)
-			client->y = (client->y - 1) % game->y;
+			client->y = (client->y - 1) >= 0 ? client->y - 1: game->y - 1;
 		else if (client->orientation == 1)
 			client->x = (client->x + 1) % game->x;
 		else if (client->orientation == 2)
 			client->y = (client->y + 1) % game->y;
 		else
-			client->x = (client->x - 1) % game->x;
+			client->x = (client->x - 1) >= 0 ? client->x - 1: game->x - 1;
 	}
 	lst = client->lines;
 	client->lines = lst->next;
