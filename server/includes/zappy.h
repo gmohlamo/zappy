@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/06 14:40:02 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/11 05:06:26 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,7 @@ void						add_op_cost(t_client *client);
 void						add_json_array(char **str, char *buffer);
 void						array_json_end(char **str);
 void						move_backlog(t_game *game, t_client *client);
+void						process_eggs(t_game *game);
 char						*see_block(t_game *game, t_client *client,
 	int x, int y);
 void						send_seen(t_game *game, t_client *client,
