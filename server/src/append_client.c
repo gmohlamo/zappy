@@ -32,7 +32,6 @@ static t_client	*new_client(t_game *game, t_connection *conn, t_team *team)
 	send(client->fd, buffer, ft_strlen(buffer), MSG_DONTWAIT);
 	update_gfx_client(game, client);
 	gettimeofday(&(client->tv), &(client->tz)); //start draining life
-	printf("life starts here");
 	remove_conn(game, conn);
 	return (client);
 }

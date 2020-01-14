@@ -62,7 +62,6 @@ static void			process_clients(t_game *game)
 	{
 		if (FD_ISSET(itr, &(game->rset)))
 		{
-			printf("Active file descriptor: %d\nMax --> %d\n", itr, game->max_fd);
 			if (itr == game->fd_sock)
 				new_connection(game);
 			else

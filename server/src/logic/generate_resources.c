@@ -25,7 +25,7 @@ void			generate_resources(t_game *game)
 	t_objects	*objects;
 
 	objects = ft_memalloc(sizeof(t_objects));
-	amount = (game->x * game->y) / 4;
+	amount = (game->x * game->y) / 2;
 	objects->count = amount;
 	objects->objects = ft_memalloc(sizeof(t_object) * amount);
 	i = 0;

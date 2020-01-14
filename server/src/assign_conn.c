@@ -25,13 +25,8 @@ void		assign_conn(t_game *game, t_connection *conn)
 	}
 	while (itr < game->team_count)
 	{
-		ft_putstr("current team name: ");
-		ft_putendl(game->teams[itr].name);
-		ft_putstr("requested team name: ");
-		ft_putstr(conn->line);
 		if (ft_strstr(conn->line, game->teams[itr].name))
 		{
-			ft_putendl("found matching team");
 			if (game->teams[itr].current_count < game->teams[itr].team_size)
 			{
 				append_client(game, conn, &(game->teams[itr]));
