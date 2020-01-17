@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 07:42:00 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/31 09:46:33 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/16 10:13:35 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static enum e_operations	no_op(t_client *client)
 ** apart from fork, the other commands match their enum values
 */
 
-enum e_operations			get_op(t_client *client)
+enum e_operations			get_op(t_game *game, t_client *client)
 {
 	ft_putendl("adding op_code");
 	if (ft_strstr((char*)client->lines->content, "advance"))
@@ -57,7 +57,7 @@ enum e_operations			get_op(t_client *client)
 	else if (ft_strstr((char*)client->lines->content, "broadcast"))
 		return (broadcast);
 	else if (ft_strstr((char*)client->lines->content, "incantation"))
-		return (incantation);
+		return (chech_incantation(game, client));
 	else if (ft_strstr((char*)client->lines->content, "fork"))
 		return (spawn);
 	else if (ft_strstr((char*)client->lines->content, "connect_nbr"))

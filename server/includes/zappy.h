@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/11 05:06:26 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/17 01:59:12 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ char						*concat_results(char **str, char *resource);
 char						*ft_strjoinint(char *str, int n);
 void						generate_resources(t_game *game);
 size_t						client_nbr(t_game *game);
-enum e_operations			get_op(t_client *client);
+enum e_operations			get_op(t_game *game, t_client *client);
 void						add_op_cost(t_client *client);
 void						add_json_array(char **str, char *buffer);
 void						array_json_end(char **str);
@@ -214,8 +214,27 @@ void						see_west(t_game *game, t_client *client,
 	t_list **blocks);
 void						see_east(t_game *game, t_client *client,
 	t_list **blocks);
-void                		take_item(t_game *game, t_client *client, char *item);
+void                		take_item(t_game *game, t_client *client,
+	char *item);
 bool						team_eggs(t_game *game, t_client *client);
+size_t						client_count(t_game *game, t_client *client);
+size_t						count_resources(t_client *client, t_game *game,
+	enum e_resource_type type);
+/*
+** incantations
+*/
+enum e_operations			incantation_failure(t_client *client);
+enum e_operations			check_incantation(t_game *game, t_client *client);
+enum e_operations			level_one_check(t_game *game, t_client *client);
+enum e_operations			level_two_check(t_game *game, t_client *client);
+enum e_operations			level_three_check(t_game *game, t_client *client);
+enum e_operations			level_four_check(t_game *game, t_client *client);
+enum e_operations			level_five_check(t_game *game, t_client *client);
+enum e_operations			level_six_check(t_game *game, t_client *client);
+enum e_operations			level_seven_check(t_game *game, t_client *client);
+bool						level_up_client(t_game *game, t_client *client,
+	size_t level_cap);
+void						check_level_req(t_game *game, t_client *client);
 /*
 ** command processing
 */

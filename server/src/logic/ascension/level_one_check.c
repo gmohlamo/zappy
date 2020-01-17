@@ -5,9 +5,9 @@
 ** confirms whether an incantation is possible for the client
 */
 
-bool			level_one_check(t_game *game, t_client *client)
+enum e_operations		level_one_check(t_game *game, t_client *client)
 {
-	size_t		itr;
+	size_t				itr;
 
 	itr = 0;
 	while (itr < game->objects->count)
@@ -15,8 +15,8 @@ bool			level_one_check(t_game *game, t_client *client)
 		if (game->objects->objects[itr].x == client->x &&
 			game->objects->objects[itr].y == client->y &&
 			game->objects->objects[itr].type == linemate)
-				return (true);
+				return (incantation);
 		itr++;
 	}
-	return (false);
+	return (none);
 }

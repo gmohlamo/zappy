@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 07:32:01 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/31 09:57:54 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/16 10:25:00 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void				move_backlog(t_game *game, t_client *client)
 	if (!ft_strchr((char*)client->lines->content, '\n'))
 		return ; //checking if we should move to the next command
 	if (client->op == none) //after an operation has been completed the op_code should be returned to none
-		client->op = get_op(client); //moved the current operation onto the client
+		client->op = get_op(game, client); //moved the current operation onto the client
 	ft_putendl("moving backlog");
 	add_op_cost(client);
 }
