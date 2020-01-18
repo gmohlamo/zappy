@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/17 01:59:12 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/17 20:30:57 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ void                		take_item(t_game *game, t_client *client,
 	char *item);
 bool						team_eggs(t_game *game, t_client *client);
 size_t						client_count(t_game *game, t_client *client);
-size_t						count_resources(t_client *client, t_game *game,
+size_t						count_resources(t_game *game, t_client *client,
 	enum e_resource_type type);
 /*
 ** incantations

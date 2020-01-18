@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 09:49:11 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/16 14:17:37 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/17 20:35:14 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ enum e_operations		level_two_check(t_game *game, t_client *client)
 	i = 0;
 	while (i< 3)
 		if (checks[i++] == 0)
-			return (incantaion_failure(game, client));
+			return (incantation_failure(client));
 	return (incantation);
 }

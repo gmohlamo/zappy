@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 07:42:00 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/16 10:13:35 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/17 12:56:34 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ enum e_operations			get_op(t_game *game, t_client *client)
 	else if (ft_strstr((char*)client->lines->content, "broadcast"))
 		return (broadcast);
 	else if (ft_strstr((char*)client->lines->content, "incantation"))
-		return (chech_incantation(game, client));
+		return (check_incantation(game, client));
 	else if (ft_strstr((char*)client->lines->content, "fork"))
 		return (spawn);
 	else if (ft_strstr((char*)client->lines->content, "connect_nbr"))

@@ -6,13 +6,13 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 02:19:29 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/17 02:23:38 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/18 09:27:09 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <zappy.h>
 
-enum e_operations			levl_seven_check(t_game *game, t_client *client)
+enum e_operations			level_seven_check(t_game *game, t_client *client)
 {
 	size_t					num;
 
