@@ -28,6 +28,7 @@ bool			team_eggs(t_game *game, t_client *client)
 			client->x = egg->x;
 			client->y = egg->y;
 			client->life = egg->life;
+			remove_egg(game, egg);
 			return (true);
 		}
 		egg = egg->next;

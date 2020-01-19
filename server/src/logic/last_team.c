@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gfx.h                                              :+:      :+:    :+:   */
+/*   last_team.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/17 16:14:18 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/19 23:00:47 by gmohlamo         ###   ########.fr       */
+/*   Created: 2020/01/19 12:28:17 by gmohlamo          #+#    #+#             */
+/*   Updated: 2020/01/19 12:30:15 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GFX_H
-# define GFX_H
+#include <zappy.h>
 
-# include <zappy.h>
+t_team				*last_team(t_game *game)
+{
+	t_client		*clients;
 
-bool		send_eggs(t_game *game, char **gfx_line, int x, int y);
-void		nbr_client(t_game *game, t_client *client);
-void		gfx_winner(t_game *game, t_team *team);
-
-# endif
+	clients = game->clients;
+	while (clients)
+	{
+		if (clients->life)
+			return (clients->team);
+		clients = clients->next;
+	}
+	return (NULL);
+}

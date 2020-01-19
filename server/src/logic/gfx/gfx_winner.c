@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gfx.h                                              :+:      :+:    :+:   */
+/*   gfx_winner.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/17 16:14:18 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/19 23:00:47 by gmohlamo         ###   ########.fr       */
+/*   Created: 2020/01/19 23:01:22 by gmohlamo          #+#    #+#             */
+/*   Updated: 2020/01/19 23:04:25 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GFX_H
-# define GFX_H
+#include <gfx.h>
 
-# include <zappy.h>
+void			gfx_winner(t_game *game, t_team *team)
+{
+	char		buffer[1024];
 
-bool		send_eggs(t_game *game, char **gfx_line, int x, int y);
-void		nbr_client(t_game *game, t_client *client);
-void		gfx_winner(t_game *game, t_team *team);
-
-# endif
+	ft_bzero(buffer, sizeof(buffer));
+	sprintf(buffer, "winner %s\n", team->name);
+	if (game->gfx > 0)
+		send(game->gfx, buffer, ft_strlen(buffer), MSG_DONTWAIT);
+	write(1, buffer, ft_strlen(buffer));
+}

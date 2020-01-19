@@ -6,14 +6,19 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 17:32:08 by gmohlamo          #+#    #+#             */
-/*   Updated: 2019/12/28 17:38:24 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/18 13:12:01 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <zappy.h>
 
-//now you don't need to write too much code to cater for an operation
-//just call the function like a method in cpp
+/*
+** add_operations()
+** adds the client operations to the game struct operations member
+** each operation can be called by calling the index associated
+** the desired operation.
+*/
+
 void			add_operations(t_game *game)
 {
 	game->operations[advance] = advance_op;

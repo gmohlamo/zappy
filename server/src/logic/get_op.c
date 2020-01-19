@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 07:42:00 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/17 12:56:34 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/18 13:43:41 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static enum e_operations	no_op(t_client *client)
 
 enum e_operations			get_op(t_game *game, t_client *client)
 {
-	ft_putendl("adding op_code");
 	if (ft_strstr((char*)client->lines->content, "advance"))
 		return (advance);
 	else if (ft_strstr((char*)client->lines->content, "right"))

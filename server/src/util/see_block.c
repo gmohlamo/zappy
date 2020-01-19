@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 09:45:09 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/06 14:48:35 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/19 11:05:53 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,27 @@ static void		get_clients(t_game *game, t_client *client, char **str, int x, int 
 	}
 }
 
+static void			get_eggs(t_game *game, t_client *client, char **str, int x, int y)
+{
+	char			buffer[1024];
+	char			*temp;
+	t_egg			*eggs;
+
+	temp = NULL;
+	ft_bzero(buffer, 1024);
+	eggs = game->eggs;
+	while (eggs)
+	{
+		if (eggs->x == x && eggs->y == y)
+		{
+			sprintf(buffer, "\"egg %s\"", eggs->team->name);
+			add_json_array(str, buffer);
+			ft_bzero(buffer, 1024);
+		}
+		eggs = eggs->next;
+	}
+}
+
 static void		array_end(char **str)
 {
 	char		*ptr;
@@ -84,6 +105,7 @@ char			*see_block(t_game *game, t_client *client, int x, int y)
 	str = NULL;
 	get_clients(game, client, &str, x, y);
 	get_resources(game, client, &str, x, y);
+	get_eggs(game, client, &str, x, y);
 	array_end(&str);
 	return (str);
 }

@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gfx.h                                              :+:      :+:    :+:   */
+/*   team_alive.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/17 16:14:18 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/19 23:00:47 by gmohlamo         ###   ########.fr       */
+/*   Created: 2020/01/19 12:18:18 by gmohlamo          #+#    #+#             */
+/*   Updated: 2020/01/19 12:20:52 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GFX_H
-# define GFX_H
+#include <zappy.h>
 
-# include <zappy.h>
+size_t				team_alive(t_game *game, t_team *team)
+{
+	t_client		*clients;
 
-bool		send_eggs(t_game *game, char **gfx_line, int x, int y);
-void		nbr_client(t_game *game, t_client *client);
-void		gfx_winner(t_game *game, t_team *team);
-
-# endif
+	clients = game->clients;
+	while (clients)
+	{
+		if (clients->team == team && clients->life > 0)
+			return (1);
+		clients = clients->next;
+	}
+	return (0);
+}

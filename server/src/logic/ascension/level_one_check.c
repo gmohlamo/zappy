@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 08:59:35 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/18 09:11:14 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/18 10:46:27 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ enum e_operations		level_one_check(t_game *game, t_client *client)
 				return (incantation);
 		itr++;
 	}
-	return (none);
+	return (incantation_failure(client));
 }

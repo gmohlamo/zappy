@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/17 20:30:57 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/19 15:36:47 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@
 # define CMD_BACKLOG 10
 # define CLIENT_ALLOC_ERR "Error: Unable to allocate memory for client"
 # define ERR_ACCEPT "Error: Unable to accept socket connection"
-# define ELEVATE "elevation in progress"
+# define ELEVATE "levelling up\n"
 # define GFX "GRAPHICS"
+# define DEBUG_CLIENT true
 
-//enums for operations and resources
+//enum for operations
 enum e_operations {advance, right, left, see, inventory, take, put, kick,
 	broadcast, incantation, spawn, connect_nbr, death, none};
+//enum for resources
 enum e_resource_type {food, linemate, deraumere, sibur, mendiane, phiras, thystame};
 
 typedef struct				s_object //represent game objects
@@ -220,6 +222,13 @@ bool						team_eggs(t_game *game, t_client *client);
 size_t						client_count(t_game *game, t_client *client);
 size_t						count_resources(t_game *game, t_client *client,
 	enum e_resource_type type);
+void						close_game(t_game *game);
+/*
+** score and winner determination
+*/
+size_t						team_alive(t_game *game, t_team *team);
+t_team						*last_team(t_game *game);
+void						get_winning_team(t_game *game);
 /*
 ** incantations
 */
