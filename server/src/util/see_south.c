@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 12:38:42 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/06 13:59:55 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/20 21:41:34 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void		aquire_coords(t_game *game, t_client *client, t_list **coords)
 	while (level < client->level)
 	{
 		level++;
-		block[0] = (block[0] + 1) % game->y;
+		block[1] = (block[1] + 1) % game->y;
 		ptr->next = horizontal(game, client, block, (level * 2) + 1);
 		while (ptr->next)
 			ptr = ptr->next;
