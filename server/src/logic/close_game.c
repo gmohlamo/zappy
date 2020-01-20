@@ -42,7 +42,7 @@ static void			close_connections(t_connection *connections)
 	}
 }
 
-static void			close_clients(t_client *clients)
+static void			close_game_clients(t_client *clients)
 {
 	t_client		*next;
 
@@ -79,7 +79,7 @@ void				close_game(t_game *game)
 	clients = game->clients;
 	connections = game->connections;
 	close_eggs(game->eggs);
-	close_clients(clients);
+	close_game_clients(clients);
 	close_connections(connections);
 	free(game->objects->objects);
 	free(game->objects);
