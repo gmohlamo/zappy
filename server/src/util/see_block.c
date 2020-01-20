@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 09:45:09 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/19 11:05:53 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/20 15:26:04 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static void		get_clients(t_game *game, t_client *client, char **str, int x, int 
 	clients = game->clients;
 	while (clients)
 	{
-		if (clients != client && clients->x == x &&clients->y == y)
+		if (clients != client && clients->x == x &&clients->y == y &&
+			clients->life > 0)
 		{
 			sprintf(buffer, "\"client %zu %s %zu %zu\"", clients->nbr,
 				clients->team->name, clients->level, client->orientation);//object we need to put in the array for this block

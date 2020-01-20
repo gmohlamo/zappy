@@ -6,7 +6,7 @@
 /*   By: gmohlamo <gmohlamo@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:47:17 by gmohlamo          #+#    #+#             */
-/*   Updated: 2020/01/19 15:36:47 by gmohlamo         ###   ########.fr       */
+/*   Updated: 2020/01/20 17:42:43 by gmohlamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,12 @@ size_t						client_count(t_game *game, t_client *client);
 size_t						count_resources(t_game *game, t_client *client,
 	enum e_resource_type type);
 void						close_game(t_game *game);
+/*
+** client LIFE management and
+** world resource management
+*/
+void						consume_food(t_game *game, t_client *client);
+void						append_resource(t_game *game, enum e_resource_type type);
 /*
 ** score and winner determination
 */
