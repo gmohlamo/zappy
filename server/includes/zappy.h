@@ -279,4 +279,48 @@ void						client_advance_gfx(t_game *game, t_client *client);
 void						client_death_update(t_game *game, t_client *client);
 void						update_gfx_client(t_game *game, t_client *client);
 
+typedef struct 				s_squares
+{
+	int						x;
+	int						y;
+	struct s_squares		*next;
+}							t_squares;
+
+typedef	struct 				s_intersect
+{
+	float 					x;
+	float 					y;
+	int 					ix;
+	int 					iy;
+	int 					square_nb;
+}							t_intersect;
+
+typedef struct 				s_equation
+{
+	float					m1;
+	float					c1;
+	float					m2;
+	float					c2;
+	float					x1;
+	float					y1;
+	float					x2;
+	float					y2;
+	float					dy;
+	float					dx;
+	float					x_intersect;
+	float					y_intersect;
+}							t_equation;
+
+void						broadcast_op(t_game *game, t_client *client);
+int							vertical_calc(t_game *game, t_client *src, t_client *dest);
+int 						horizontal_calc(t_game *game, t_client *src, t_client *dest);
+t_squares					*get_squares();
+t_squares					*get_square_sp(t_squares *squares, int orientation);
+float       				get_oob_hypot(t_client *src, t_client *dest, t_game *game);
+int 						diagonal_calc(t_game *game, t_client *src, t_client *dest);
+t_intersect					*get_line_intersection(t_client *src, t_client *dest);
+void						determine_hor_line(t_client *src, t_client *dest, t_equation *e);
+void						determine_ver_line(t_client *src, t_client *dest, t_equation *e);
+int 						get_oob_square(t_intersect *i, t_client *dest, t_client *src, t_game *game);
+
 #endif

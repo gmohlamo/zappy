@@ -1,5 +1,7 @@
 server = server
 
+broadcast = broadcast
+
 FLAGS = gcc -I./includes -I./libft -L./libft
      
 part1 = obj/part1/add_gfx.o obj/part1/append_client.o obj/part1/append_connection.o\
@@ -25,7 +27,15 @@ part5 = obj/part5/append_line.o\
 
 part6 = obj/part6/ft_strjoinint.o obj/part6/client_nbr.o\
 
+broadcast = obj/broadcast/broadcast.o obj/broadcast/horizontal_calc.o\
+		obj/broadcast/squares.o obj/broadcast/vertical_calc.o obj/broadcast/hyp_calc.o\
+		obj/broadcast/diagonal_calc.o obj/broadcast/line_intersection.o\
+		obj/broadcast/line.o obj/broadcast/oob.o\
+
 all : $(server)
+
+broad : $(broadcast)
+	$(FLAGS) -o broad $(broadcast) -lm libft/libft.a -g
 
 $(server) : $(part1) $(part2) $(part3) $(part4) $(part5) $(part6)
 	make -C libft 
@@ -48,6 +58,9 @@ $(part5): obj/part5/%.o: src/logic/%.c
 
 $(part6): obj/part6/%.o: src/util/%.c
 	$(FLAGS) -c src/util/$*.c -o $@
+
+$(broadcast): obj/broadcast/%.o: src/logic/client/broadcast/%.c
+	$(FLAGS) -c src/logic/client/broadcast/$*.c -lm -o $@
 
 clean:
 	make clean -C libft/
