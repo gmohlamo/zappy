@@ -13,6 +13,7 @@ int		get_ver_origin(t_client *dest, int y, t_squares *squares)
 		square_nb++;
 		squares = squares->next;
 	}
+	return (0);
 }
 
 int			vertical_calc(t_game *game, t_client *src, t_client *dest)

@@ -51,9 +51,9 @@ void					broadcast_op(t_game *game, t_client *client)
 	t_client			*clients;
 	int					square_nb;
 
-	clients = game->clients;
 	lst = client->lines;
 	client->lines = lst->next;
+	clients = game->clients;
 	while (clients)
 	{
 		if (clients != client)

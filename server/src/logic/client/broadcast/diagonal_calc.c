@@ -33,6 +33,7 @@ int       get_square_nb(t_client *dest, t_intersect *i)
         square_nb++;
         sq = sq->next;
     }
+    return (0);
 }
 
 int          diagonal_calc(t_game *game, t_client *src, t_client *dest)
@@ -56,4 +57,5 @@ int          diagonal_calc(t_game *game, t_client *src, t_client *dest)
         i = get_line_intersection(src, dest);
         return (get_square_nb(dest, i));
     }
+    return (square_nb);
 }

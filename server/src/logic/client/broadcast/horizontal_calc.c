@@ -13,6 +13,7 @@ int			get_hor_origin(t_client *dest, int x, t_squares *squares)
 		square_nb++;
 		squares = squares->next;
 	}
+	return (0);
 }
 
 int			horizontal_calc(t_game *game, t_client *src, t_client *dest)
@@ -34,6 +35,5 @@ int			horizontal_calc(t_game *game, t_client *src, t_client *dest)
 		else
 			return (get_hor_origin(dest, dest->x + 1, squares));
 	}
-	else
-		return (0);
+	return (0);
 }
