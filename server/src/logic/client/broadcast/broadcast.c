@@ -25,7 +25,7 @@ void				send_msg(int square_nb, char *message, t_client *dest)
 	part4 = ft_strjoin(part1, part2);
 	free(part1);
 	part1 = NULL;
-	part1 = ft_strjoin(part4, message);
+	part1 = ft_strjoin(part4, ft_strtrim(message) + 10);
 	msg = ft_strjoin(part1, part3);
 	free(part1);
 	free(part2);

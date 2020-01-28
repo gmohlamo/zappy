@@ -70,6 +70,7 @@ static void			process_clients(t_game *game)
 		itr++;
 	}
 	run_commands(game);
+	get_winning_team(game);
 	process_eggs(game);
 }
 

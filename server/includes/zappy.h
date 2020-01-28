@@ -39,7 +39,7 @@
 # define ERR_ACCEPT "Error: Unable to accept socket connection"
 # define ELEVATE "levelling up\n"
 # define GFX "GRAPHICS"
-# define DEBUG_CLIENT true
+# define DEBUG_CLIENT false
 
 //enum for operations
 enum e_operations {advance, right, left, see, inventory, take, put, kick,
